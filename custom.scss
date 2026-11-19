@@ -1,0 +1,169 @@
+/*-- scss:defaults --*/
+
+// Fonts and colours follow the xaringanthemer style_mono_accent() theme
+// used in the 2024 and 2025 R Conference talks (base colour #165CAA).
+@import url("https://fonts.googleapis.com/css2?family=Cabin:ital,wght@0,600;1,600&family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&family=Source+Code+Pro:wght@400;700&display=swap");
+
+$theme-blue: #165CAA;
+$theme-red: #C0392B;
+$theme-purple: #7D3C98;
+
+$font-family-sans-serif: "Noto Sans", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+$font-family-monospace: "Source Code Pro", Menlo, Consolas, monospace;
+$presentation-heading-font: "Cabin", Georgia, serif;
+$presentation-heading-color: $theme-blue;
+$presentation-heading-font-weight: 600;
+$presentation-heading-text-transform: none;
+$presentation-font-size-root: 30px;
+$presentation-h1-font-size: 2.2em;
+$presentation-h2-font-size: 1.45em;
+$presentation-h3-font-size: 1.1em;
+$presentation-h4-font-size: 0.95em;
+
+$body-bg: #FFFFFF;
+$body-color: #272822;
+$link-color: $theme-blue;
+$code-color: $theme-blue;
+$code-block-font-size: 0.6em;
+$code-block-bg: #F6F8FA;
+$code-block-border-color: lighten($theme-blue, 45%);
+
+/*-- scss:rules --*/
+
+.reveal strong {
+  color: $theme-blue;
+}
+
+// Leave room for the logo at the top right
+.reveal .slides section h2 {
+  padding-right: 3.2em;
+  margin-bottom: 0.6em;
+}
+
+// R User Malaysia logo at top right, as in the xaringan decks
+.reveal .slide-logo {
+  top: 0.6em !important;
+  right: 0.8em !important;
+  bottom: auto !important;
+  left: auto !important;
+  max-height: 2.6em !important;
+  height: 2.6em !important;
+  width: auto !important;
+}
+
+// Three-part footer banner: author | conference | talk title
+.reveal .footer {
+  display: flex !important;
+  justify-content: space-between;
+  width: 100%;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  padding: 0.25em 1.2em;
+  box-sizing: border-box;
+  background-color: $theme-blue;
+  color: #FFFFFF;
+  font-size: 0.42em !important;
+  text-align: left;
+}
+.reveal .footer span { color: #FFFFFF; }
+.reveal .footer p { margin: 0; width: 100%; display: flex; justify-content: space-between; }
+
+.reveal .slide-number {
+  bottom: 1.7em !important;
+  right: 0.8em !important;
+  background-color: transparent !important;
+  color: $theme-blue !important;
+  font-size: 0.5em !important;
+}
+
+// Title slide
+#title-slide {
+  text-align: left;
+  .title { font-size: 2.3em; color: $theme-blue; }
+  .subtitle { font-size: 1.1em; color: #272822; font-style: normal; }
+  .quarto-title-author-name { color: #272822; font-weight: 700; }
+  .quarto-title-affiliation { font-size: 0.8em; color: #555; font-style: normal; }
+  .date { font-size: 0.8em; color: #555; }
+}
+
+// Section (inverse) slides
+.reveal .slides section.has-dark-background h1,
+.reveal .slides section.has-dark-background h2,
+.reveal .slides section.has-dark-background p {
+  color: #FFFFFF;
+}
+.reveal .slides section.has-dark-background h1 { font-size: 2em; }
+.reveal .slides section.section-slide {
+  text-align: center;
+}
+.reveal .slides section.section-slide code {
+  color: #FFFFFF;
+  background: transparent;
+}
+.reveal .slides section.section-slide h2 {
+  font-size: 1.9em;
+  padding-right: 0;
+  margin-top: 4.2em;
+  line-height: 1.3;
+}
+
+// Helpers
+.small { font-size: 0.75em; }
+.smaller { font-size: 0.62em; }
+.tiny { font-size: 0.5em; }
+.muted { color: #777; }
+.blue { color: $theme-blue; }
+.red { color: $theme-red; }
+.purple { color: $theme-purple; }
+.center { text-align: center; }
+
+.big-quote {
+  font-family: "Cabin", Georgia, serif;
+  font-size: 1.3em;
+  color: $theme-blue;
+  text-align: center;
+  margin-top: 1em;
+}
+
+// Card grid for "tasks" slides
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5em;
+  font-size: 0.6em;
+}
+.cards.three { grid-template-columns: repeat(3, 1fr); }
+.cards .card {
+  border: 2px solid lighten($theme-blue, 35%);
+  border-top: 6px solid $theme-blue;
+  border-radius: 8px;
+  padding: 0.5em 0.6em;
+  background: #FAFCFF;
+  line-height: 1.25;
+}
+.cards .card .card-title {
+  display: block;
+  font-family: "Cabin", Georgia, serif;
+  font-weight: 600;
+  font-size: 1.15em;
+  color: $theme-blue;
+}
+.cards .card p { margin: 0 0 0.25em 0; }
+.cards .card.c-red { border-top-color: $theme-red; }
+.cards .card.c-red .card-title { color: $theme-red; }
+.cards .card.c-purple { border-top-color: $theme-purple; }
+.cards .card.c-purple .card-title { color: $theme-purple; }
+
+// Compact tables
+.reveal table { font-size: 0.6em; }
+.reveal table th { color: $theme-blue; border-bottom: 2px solid $theme-blue; }
+.reveal table td, .reveal table th { padding: 0.25em 0.5em; }
+
+// Code output
+.reveal pre code { max-height: 480px; }
+.reveal div.cell-output pre code { background-color: #FFFFFF; }
+
+// References slide
+#refs { font-size: 0.85em; line-height: 1.25; }
+#refs .csl-entry { margin-bottom: 0.35em; }

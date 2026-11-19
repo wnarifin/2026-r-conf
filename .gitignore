@@ -4,7 +4,6 @@
 
 # Session Data files
 .RData
-.RDataTmp
 
 # User-specific files
 .Ruserdata
@@ -36,20 +35,23 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 
-# R Environment Variables
+# Quarto
+/.quarto/
+*_cache/
+/_freeze/
+
+# API keys -- never commit real keys. The tracked files `api` and `code/api`
+# are placeholders only; keep your own key outside the repository or in .Renviron
 .Renviron
-.env
 
-# pkgdown site
-docs/
-
-# translation temp files
-po/*~
-
-# RStudio Connect folder
-rsconnect/
-
-# compiled code 
-src/*.o
-src/*.so
-src/*.dll
+# LLM outputs from demo runs
+*.jsonl
+code/*.duckdb
+*.duckdb
+*.duckdb.wal
+kencing_manis.html
+pt_data.jsonl
+kencing_manis.json
+kencing_manis.md
+demo_files/
+demo.html

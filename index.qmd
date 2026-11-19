@@ -1,0 +1,728 @@
+---
+title: "Medicine × LLM × R"
+subtitle: "Keynote · R Conference Malaysia 2026, Sunway University"
+author:
+  - name: "Dr. Wan Nor Arifin"
+    affiliations:
+      - "Department of Biostatistics & Research Methodology, Universiti Sains Malaysia"
+      - "wnarifin.github.io"
+date: "21 November 2026"
+date-format: "D MMMM YYYY"
+format:
+  revealjs:
+    theme: [default, custom.scss]
+    logo: img/r-user-malaysia-logo.png
+    footer: '<span>Dr. Wan Nor Arifin</span><span>R Conference Malaysia 2026</span><span>Medicine × LLM × R</span>'
+    slide-number: c/t
+    width: 1280
+    height: 720
+    margin: 0.06
+    transition: none
+    highlight-style: github
+    code-line-numbers: false
+    code-copy: true
+    hash-type: number
+    preview-links: auto
+    chalkboard: false
+    menu: true
+    embed-resources: false
+bibliography: references.bib
+link-citations: true
+execute:
+  echo: false
+  warning: false
+  message: false
+knitr:
+  opts_chunk:
+    comment: "#>"
+    fig.retina: 3
+    dev: "png"
+---
+
+```{r setup}
+#| include: false
+library(ggplot2)
+r_blue = fontawesome::fa("r-project", fill = "#165CAA")
+py = fontawesome::fa("python", fill = "#3776AB")
+heart_red = fontawesome::fa("heart", fill = "red", prefer_type = "solid")
+stetho = fontawesome::fa("stethoscope", fill = "#C0392B")
+robot = fontawesome::fa("robot", fill = "#7D3C98")
+ok = fontawesome::fa("check", fill = "#1E8449")
+meh = fontawesome::fa("minus", fill = "#B9770E")
+warn = fontawesome::fa("triangle-exclamation", fill = "#C0392B")
+theme_blue = "#165CAA"; theme_red = "#C0392B"; theme_purple = "#7D3C98"
+```
+
+## Outlines
+
+- #### Medicine and computers: from computer-aided diagnosis to AI
+- #### The rise of large language models (LLMs) and what they do for medicine
+- #### Where `r r_blue` stands: packages and showcases
+- #### Take-home messages
+
+::: notes
+~1 min. Welcome, thank the organisers (MyRUG, R Consortium, Sunway University).
+Time plan (45 min): Part 1 ~8 min, Part 2 ~10 min, Part 3 ~20 min, wrap-up ~4 min, Q&A remainder.
+:::
+
+## Medicine × LLM × `r r_blue` {.center}
+
+```{r venn}
+#| fig-width: 8
+#| fig-height: 5.6
+#| out-width: "72%"
+#| fig-align: center
+circle = function(x0, y0, r = 1, n = 361, group) {
+  t = seq(0, 2 * pi, length.out = n)
+  data.frame(x = x0 + r * cos(t), y = y0 + r * sin(t), group = group)
+}
+circles = rbind(
+  circle(-0.62, 0.36, group = "Medicine"),
+  circle( 0.62, 0.36, group = "LLM"),
+  circle( 0.00, -0.68, group = "R")
+)
+labs_main = data.frame(
+  x = c(-1.12, 1.12, 0),
+  y = c(0.88, 0.88, -1.30),
+  lab = c("Medicine", "LLM", "R"),
+  col = c(theme_red, theme_purple, theme_blue)
+)
+labs_int = data.frame(
+  x = c(0, -0.80, 0.80, 0),
+  y = c(1.00, -0.42, -0.42, 0.06),
+  lab = c("Clinical LLMs\ndiagnosis, notes",
+          "Biostatistics\nepidemiology",
+          "ellmer, tidyllm\nrollama",
+          "This\nkeynote"),
+  face = c("plain", "plain", "plain", "bold"),
+  size = c(4.2, 4.2, 4.2, 5.2)
+)
+ggplot(circles, aes(x, y, group = group, fill = group, colour = group)) +
+  geom_polygon(alpha = 0.18, linewidth = 1.3) +
+  geom_text(data = labs_main, aes(x, y, label = lab), inherit.aes = FALSE,
+            colour = labs_main$col, size = 8.5, fontface = "bold") +
+  geom_text(data = labs_int, aes(x, y, label = lab), inherit.aes = FALSE,
+            size = labs_int$size, fontface = labs_int$face, lineheight = 0.9,
+            colour = "#272822") +
+  scale_fill_manual(values = c(Medicine = theme_red, LLM = theme_purple, R = theme_blue)) +
+  scale_colour_manual(values = c(Medicine = theme_red, LLM = theme_purple, R = theme_blue)) +
+  coord_equal() +
+  theme_void() +
+  theme(legend.position = "none")
+```
+
+::: notes
+~1.5 min. Frame the talk: three circles. Medicine ∩ LLM is a booming research area; Medicine ∩ R is our home turf (biostatistics, epidemiology, clinical trials); LLM ∩ R is newer but maturing quickly. The question for today: what happens in the centre?
+:::
+
+## Part 1<br>Medicine and computers: from computer-aided diagnosis to AI {.section-slide background-color="#165CAA"}
+
+## Medical tasks that call for computer assistance
+
+::: {.cards}
+::: {.card}
+[Diagnosis]{.card-title}
+
+Differential diagnosis, probabilistic reasoning [@ledley1959; @dedombal1972]
+:::
+::: {.card}
+[Medical imaging]{.card-title}
+
+Detection and classification in radiology, retina, skin [@doi2007; @gulshan2016]
+:::
+::: {.card}
+[Decision support]{.card-title}
+
+Alerts, order checking, guideline reminders [@bates1998; @kawamoto2005]
+:::
+::: {.card}
+[Prediction]{.card-title}
+
+Risk scores and early warning, e.g. sepsis [@wong2021]
+:::
+::: {.card .c-red}
+[Documentation]{.card-title}
+
+Records, notes, discharge summaries: a major source of clinician burden
+:::
+::: {.card .c-red}
+[Evidence synthesis]{.card-title}
+
+Searching, screening and extracting data from studies [@gartlehner2024]
+:::
+::: {.card .c-purple}
+[Discovery]{.card-title}
+
+Protein structure, drug targets [@jumper2021]
+:::
+::: {.card .c-purple}
+[Research & education]{.card-title}
+
+Statistical analysis, teaching, assessment
+:::
+:::
+
+::: {.small .muted .center}
+Common thread: **large volume**, **complex reasoning**, **repetitive work**, where humans tire and err.
+:::
+
+::: notes
+~1.5 min. These are the recurring "pain points". The red cards (documentation, evidence synthesis) are mostly text: that is where LLMs will come in later.
+:::
+
+## From computer-aided diagnosis to AI: a timeline
+
+```{r timeline-cad}
+#| fig-width: 11
+#| fig-height: 5.4
+#| out-width: "100%"
+tl = data.frame(
+  year = c(1959, 1972, 1976, 1982, 1998, 2005, 2016, 2018, 2020, 2021),
+  lab = c("Ledley & Lusted:\nreasoning\nfoundations",
+          "de Dombal:\nacute abdominal\npain diagnosis",
+          "MYCIN:\nrule-based\nexpert system",
+          "INTERNIST-1:\ndiagnostic\nconsultant",
+          "Order entry cuts\nmedication errors;\nmammography CAD",
+          "Decision support\nworks in 68%\nof trials",
+          "Deep learning:\ndiabetic\nretinopathy",
+          "First FDA-\nauthorised\nautonomous AI",
+          "COVID-19 AI boom;\nbreast cancer\nscreening AI",
+          "AlphaFold:\nprotein structure"),
+  era = factor(c(rep("Rules & probability", 4), rep("Digitisation & decision support", 2),
+          rep("Deep learning", 4)),
+    levels = c("Rules & probability", "Digitisation & decision support", "Deep learning"))
+)
+tl$side = rep(c(1, -1), length.out = nrow(tl))
+tl$pos = seq_len(nrow(tl))
+ggplot(tl, aes(pos, 0)) +
+  geom_hline(yintercept = 0, colour = "grey60", linewidth = 1) +
+  geom_segment(aes(xend = pos, y = 0, yend = side * 0.55, colour = era), linewidth = 1, show.legend = FALSE) +
+  geom_point(aes(colour = era), size = 5) +
+  geom_label(aes(y = side * 0.95, label = lab, colour = era), size = 4.9,
+             lineheight = 0.9, label.size = 0.7, fill = "white", show.legend = FALSE) +
+  scale_colour_manual(values = c("Rules & probability" = theme_red,
+                                 "Digitisation & decision support" = theme_purple,
+                                 "Deep learning" = theme_blue), name = NULL) +
+  geom_text(aes(y = -side * 0.22, label = year), size = 5.5, fontface = "bold", colour = "#272822") +
+  scale_y_continuous(limits = c(-1.25, 1.25)) +
+  scale_x_continuous(expand = expansion(add = 0.8)) +
+  theme_void(base_size = 18) +
+  theme(legend.position = "bottom") +
+  guides(colour = guide_legend(override.aes = list(size = 6)))
+```
+
+::: {.tiny .muted}
+@ledley1959; @dedombal1972; @shortliffe1976; @miller1982; @bates1998; @doi2007; @kawamoto2005; @gulshan2016; @abramoff2018; @mckinney2020; @wynants2020; @jumper2021
+:::
+
+::: notes
+~1 min. Three eras. Emphasise that "computer-aided diagnosis" is more than 60 years old: AI in medicine did not start with ChatGPT.
+:::
+
+## Era 1: rules and probabilities (1959–1980s)
+
+:::: {.columns}
+::: {.column width="55%"}
+- **@ledley1959**: diagnosis as symbolic logic + probability (Bayes) + value theory
+- **@dedombal1972**: prospective real-time comparison in 304 patients with acute abdominal pain
+  - Computer accuracy **91.8%** _vs_ most senior clinician **79.6%**
+- **MYCIN** [@shortliffe1976]: if–then rules for infections and antibiotic choice
+- **INTERNIST-1** [@miller1982]: diagnostic consultant for general internal medicine
+:::
+::: {.column width="45%"}
+::: {.big-quote}
+Bayes' theorem was the first "AI" at the bedside
+:::
+::: {.small .muted .center}
+Knowledge was **hand-coded** by experts (expert system): powerful but brittle and hard to maintain
+:::
+:::
+::::
+
+::: notes
+~1.5 min. Point to statisticians in the room: probability and Bayes were at the core of the very first CAD. Expert systems failed to scale because knowledge had to be hand-coded and maintained.
+:::
+
+## Era 2: digitisation and decision support (1990s–2000s)
+
+:::: {.columns}
+::: {.column width="50%"}
+#### Clinical decision support
+- Computerised physician order entry: nonintercepted serious medication errors **↓ 55%** [@bates1998]
+- Systematic review of 70 RCTs: decision support improved practice in **68%** of trials; best when **automatic and within workflow** [@kawamoto2005]
+:::
+::: {.column width="50%"}
+#### CAD in imaging
+- Mammography CAD approved by FDA in 1998 [@doi2007]
+- But in real-world use, sensitivity **↑** (not sig.), specificity **↓**, and biopsy rate **↑ 19.7%**; increased potential harms of screening mammography with uncertain clinical benefit [@fenton2007]
+:::
+::::
+
+::: {.big-quote}
+Lesson: **workflow fit** and **real-world evaluation** decide success
+:::
+
+::: notes
+~1.5 min. Two lessons we will meet again with LLMs: (1) tools succeed when they fit into the workflow; (2) promising lab performance does not guarantee real-world benefit (Fenton 2007). CAD: image enhancement and hand-crafted features with simple classifiers. Not yet DL.
+:::
+
+## Era 3: deep learning (2012–today)
+
+:::: {.columns}
+::: {.column width="55%"}
+- **Retina**: diabetic retinopathy, AUC 0.99 [@gulshan2016]
+- **Skin**: CNN on par with 21 dermatologists [@esteva2017]
+- **First autonomous AI** authorised by FDA: sensitivity 87.2%, specificity 90.7% [@abramoff2018]
+- **Breast screening**: fewer false positives and negatives than radiologists [@mckinney2020]
+- **COVID-19**: chest CT + clinical data, AUC 0.92 [@mei2020]
+- **AlphaFold**: protein structure prediction [@jumper2021]
+:::
+::: {.column width="45%"}
+::: {.callout-warning}
+## A cautionary tale
+A widely implemented proprietary sepsis model: AUC **0.63** on external validation, missed **67%** of sepsis cases, but alerts for 18% of all inpatients  -- alert fatigue [@wong2021]
+:::
+::: {.small .muted}
+Reviews: @topol2019; @rajpurkar2022
+:::
+:::
+::::
+
+::: notes
+~2 min. Deep learning moved CAD from hand-coded rules to learning from data, mainly images. The Epic sepsis model reminds us: external validation, calibration and alert fatigue are statistical questions. This is where biostatisticians (and R) matter.
+:::
+
+## 2020: the COVID-19 AI boom … and its lessons
+
+:::: {.columns}
+::: {.column width="50%"}
+#### The promise
+- Urgent need: RT-PCR took up to 2 days and test kits were short [@mei2020]
+- AI on chest CT and X-ray looked like a fast answer
+- Within months: **hundreds** of diagnostic and prognostic models
+:::
+::: {.column width="50%"}
+#### The reality
+- Systematic review of 731 prediction models: "Most published prediction model studies were poorly reported and at high risk of bias such that their reported predictive performances are probably optimistic" [@wynants2020]
+- Systematic review of 62 studies on machine learning for COVID-19 imaging: **none** "... are of potential clinical use due to methodological flaws and/or underlying biases" [@roberts2021]
+:::
+::::
+
+::: {.big-quote}
+Speed without **methodology** gives models that cannot be used
+:::
+
+::: notes
+~1.5 min. COVID-19 was the biggest "AI boom" in medicine before ChatGPT. Common problems: poor-quality and biased data, small samples, no external validation, poor reporting (TRIPOD, PROBAST). The same risks apply to the current LLM boom. Wynants et al. figures are from update 3 of the living review.
+:::
+
+## Lessons from 60 years of computers in medicine
+
+1. Computers are **assistants**: they extend, not replace, clinicians
+2. **Workflow** integration matters as much as accuracy
+3. **Evaluation** in real-world settings is non-negotiable: sensitivity, specificity, calibration, impact
+4. Most of the remaining burden is **text**: notes, letters, reports, papers
+
+. . .
+
+::: {.big-quote}
+… and _text_ is exactly what _large language models_ are good at
+:::
+
+::: notes
+~1 min. Bridge to Part 2.
+:::
+
+## Part 2<br>The rise of large language models {.section-slide background-color="#165CAA"}
+
+## From "Attention is all you need" to today
+
+```{r timeline-llm}
+#| fig-width: 11
+#| fig-height: 5.4
+#| out-width: "100%"
+tl2 = data.frame(
+  when = c("Jun 2017", "2018", "2019", "2020", "Mar 2022", "Nov 2022",
+           "2023", "2024", "2025", "2026"),
+  lab = c("Transformer:\nself-attention",
+          "GPT-1: decoder-\nonly; BERT\n(encoder)",
+          "GPT-2:\n1.5B parameters",
+          "GPT-3: 175B,\nfew-shot learning",
+          "InstructGPT:\ninstruction\nfollowing",
+          "ChatGPT\nreleased",
+          "GPT-4; Llama\n(open weight);\nMed-PaLM",
+          "Multimodal,\nsmall/local;\nMed-PaLM 2",
+          "Reasoning (DeepSeek-R1);\nopen medical models\n(MedGemma); AMIE",
+          "MedGemma 1.5;\nclinical RCTs;\nagentic AI"),
+  era = factor(c("Architecture", rep("Pre-training at scale", 3), rep("Chat & alignment", 2),
+          rep("Foundation models everywhere", 4)),
+    levels = c("Architecture", "Pre-training at scale", "Chat & alignment", "Foundation models everywhere"))
+)
+tl2$side = rep(c(1, -1), length.out = nrow(tl2))
+tl2$pos = seq_len(nrow(tl2))
+ggplot(tl2, aes(pos, 0)) +
+  geom_hline(yintercept = 0, colour = "grey60", linewidth = 1) +
+  geom_segment(aes(xend = pos, y = 0, yend = side * 0.55, colour = era), linewidth = 1, show.legend = FALSE) +
+  geom_point(aes(colour = era), size = 5) +
+  geom_label(aes(y = side * 0.95, label = lab, colour = era), size = 4.9,
+             lineheight = 0.9, label.size = 0.7, fill = "white", show.legend = FALSE) +
+  geom_text(aes(y = -side * 0.22, label = when), size = 5.5, fontface = "bold", colour = "#272822") +
+  scale_colour_manual(values = c("Architecture" = theme_red,
+                                 "Pre-training at scale" = theme_purple,
+                                 "Chat & alignment" = "#B9770E",
+                                 "Foundation models everywhere" = theme_blue), name = NULL) +
+  scale_y_continuous(limits = c(-1.25, 1.25)) +
+  scale_x_continuous(expand = expansion(add = 0.8)) +
+  theme_void(base_size = 18) +
+  theme(legend.position = "bottom") +
+  guides(colour = guide_legend(override.aes = list(size = 6)))
+```
+
+::: {.tiny .muted}
+@vaswani2017; @radford2018; @devlin2019; @radford2019; @brown2020; @ouyang2022; @openai2022; @openai2023; @touvron2023; @singhal2023; @singhal2025; @guo2025; @sellergren2025; @medgemma15; @mcduff2025; @osullivan2026
+:::
+
+::: notes
+~2 min. Keep it brief. Key turning points: Transformer (2017), decoder-only generative pre-training (GPT, 2018), scale (GPT-3, 2020), instruction following (InstructGPT) and ChatGPT (Nov 2022). Since then: open-weight models (Llama, Qwen, Gemma...), reasoning models, multimodal, agents. MedGemma (Google, 2025): open-weight medical models built on Gemma 3 (4B multimodal, 27B), updated as MedGemma 1.5 4B in 2026; available in Ollama, so usable from R locally (Part 3).
+:::
+
+## Early signals: LLMs know (a lot of) medicine
+
+:::: {.columns}
+::: {.column width="50%"}
+#### Medical exams
+- ChatGPT at or near the **passing threshold** on all three USMLE steps, without specialised training [@kung2023]
+- Med-PaLM: **67.6%** on MedQA [@singhal2023] → Med-PaLM 2: **86.5%** [@singhal2025]
+:::
+::: {.column width="50%"}
+#### Communication with patients
+- 195 patient questions from a public forum: evaluators preferred chatbot responses to physician responses in **78.6%** evaluations -- better quality, more empathic than human physicians [@ayers2023]
+:::
+::::
+
+::: {.callout-note}
+## But ...
+Of 519 LLM evaluation studies (2022–2024), only **5%** used real patient-care data [@bedi2025]. So, is it valid?
+:::
+
+::: notes
+~1.5 min. US Medical Licensing Exam (USMLE), MedQA: US Medical Licensing Exam-style questions.
+:::
+
+## How medicine benefits from LLMs: by task
+
+| Task | Example study | Key finding |
+|:-----|:--------------|:------------|
+| **Diagnosis** | AMIE, 302 differential diagnoses of complex cases [@mcduff2025] | Top-10 accuracy: AMIE alone 59.1% _vs_ unassisted clinicians 33.6% |
+| | Physician RCT [@goh2024] | LLM access did _not_ improve physicians' diagnostic reasoning; but the LLM alone scored 16 percentage points higher than physicians with conventional resources |
+| | Cardiology RCT [@osullivan2026] | Fewer clinical errors with AMIE assistance (13.1% _vs_ 24.3%) |
+| **Documentation** | Ambient AI scribes, RCTs [@lukac2025; @afshar2025] | Less time in notes, less work exhaustion; occasional inaccuracies |
+| **Summarisation** | 4 clinical summarisation tasks [@vanveen2024] | LLM summaries were superior to medical experts' in 36% of cases (equivalent in 45%) |
+| **Information extraction** | 1026 lung cancer, 191 pediatric osteosarcoma pathology reports [@huang2024] | classification accuracy: 89% and 98.6% respectively |
+| **Evidence synthesis** | Data extraction from RCTs for systematic review [@gartlehner2024] | 96.3% accuracy over 160 data elements from 10 papers |
+| **Dialogue / history-taking** | Conversational AMIE [@tu2025] | Higher diagnostic accuracy than primary care physicians in text-based consultations |
+
+::: notes
+~3 min. Pick 2–3 rows to highlight. AMIE (Articulate Medical Intelligence Explorer).
+:::
+
+## Human + AI collaboration
+
+:::: {.columns}
+::: {.column width="50%"}
+- RCT of 70 clinicians: AI as **first** or **second opinion** improved diagnostic accuracy (85% and 82% _vs_ 75% with conventional resources)  -- complementary role of AI [@everett2026]
+- Just giving clinicians a chatbot was not enough -- emphasis on AI as assistant [@goh2024]
+:::
+::: {.column width="50%"}
+::: {.big-quote}
+An LLM is an **assistant**, not a replacement
+:::
+:::
+::::
+
+::: notes
+~1 min. Echo Part 1 lesson: workflow matters.
+:::
+
+## Risks we must manage
+
+:::: {.columns}
+::: {.column width="50%"}
+- `r warn` **Hallucination**: fluent but fabricated content [@wang2024; @thirunavukarasu2023]
+- `r warn` **Bias**: gender-, race-biased responses [@wang2024; @omiye2023]
+- `r warn` **Inconsistency**: different answers to the same question [@omiye2023]
+:::
+::: {.column width="50%"}
+- `r warn` **Privacy**: patient data sent to cloud providers
+- `r warn` **Changing models**: behaviour shifts between versions, opaque training data [@iozzia2026]
+- `r warn` **Evaluation gap**: few studies on real patient data [@bedi2025]
+:::
+::::
+
+::: {.big-quote}
+These are **statistical** and **governance** problems, not only engineering ones
+:::
+
+::: notes
+~1.5 min. Local/small language models (SLMs) are one answer to privacy and versioning (my SLM book review). Evaluation, agreement, bias and reproducibility are bread-and-butter for biostatisticians.
+:::
+
+## Part 3<br>Where `r fontawesome::fa('r-project', fill = 'white')` stands {.section-slide background-color="#165CAA"}
+
+## `r py` Python dominates LLM development
+
+- Pre-training, fine-tuning and serving: PyTorch, Hugging Face Transformers, vLLM, …
+- In 2024, Python overtook JavaScript as the most used language on GitHub, driven by AI and data science [@octoverse2024]
+- Practitioner LLM books assume Python and PyTorch skills, e.g. @iozzia2026
+
+. . .
+
+::: {.big-quote}
+So… is `r r_blue` still relevant for LLMs in medicine?
+:::
+
+::: notes
+~1 min. Be honest: for building and training models, Python wins, and that is fine.
+:::
+
+## Most medical users do not _build_ LLMs; they _use_ them
+
+:::: {.columns}
+::: {.column width="50%"}
+#### Build the engine `r py`
+- Pre-training from scratch
+- Fine-tuning, quantisation
+- Serving at scale
+:::
+::: {.column width="50%"}
+#### Drive the car `r r_blue`
+- **Inference**: prompt a model via API or locally
+- **Structure** text into analysable data
+- **Evaluate** the outputs statistically
+- **Report** and **share**: Quarto, Shiny
+:::
+::::
+
+::: {.big-quote}
+For the second column, `r r_blue` is a first-class citizen
+:::
+
+::: notes
+~1 min. Analogy from Iozzia's SLM book: the model is the engine; an application needs the rest of the car. R users mostly need the car, not the engine factory.
+:::
+
+## Where `r r_blue` stands
+
+::: {.cards .three}
+::: {.card}
+[1. Inference]{.card-title}
+
+Cloud APIs (OpenAI, Claude, Gemini, …) and **local** models via Ollama: same R session, one interface [@ellmer; @rollama]
+:::
+::: {.card}
+[2. Prototyping research ideas]{.card-title}
+
+Test an idea in minutes, next to your data, your models and your plots
+:::
+::: {.card}
+[3. Text → data]{.card-title}
+
+Extract structured variables from notes and papers straight into data frames [@tidyllm; @arifin2026workshop]
+:::
+::: {.card .c-red}
+[4. Evaluation]{.card-title}
+
+Accuracy, agreement, CIs, trials of LLM tools: biostatistics' home turf [@vitals]
+:::
+::: {.card .c-red}
+[5. Simple apps]{.card-title}
+
+Shiny + chat UI for patient education or data Q&A in a few lines [@shinychat]
+:::
+::: {.card .c-red}
+[6. Reproducible reporting]{.card-title}
+
+Prompts, model versions, seeds and results in one Quarto document
+:::
+::: {.card .c-purple}
+[7. Privacy-first local LLMs]{.card-title}
+
+Patient data stay on your machine with Ollama + R [@arifin2026book]
+:::
+::: {.card .c-purple}
+[8. Trusted in clinical research]{.card-title}
+
+R-based submission packages reviewed by the FDA [@rconsortium2024]
+:::
+::: {.card .c-purple}
+[9. RAG, tools & agents]{.card-title}
+
+Retrieval over guidelines, tool calling, MCP: R functions as tools [@ragnar; @mcptools]
+:::
+:::
+
+::: notes
+~2 min. These are the answers to "in what context?". Points 1–3 were in the abstract; 4–9 are the ones I want to add. If Python is needed (e.g. a Hugging Face model), reticulate bridges the gap. Evidence for no 8: https://github.com/RConsortium/submissions-pilot3-adam
+:::
+
+## The `r r_blue` + LLM package landscape
+
+| Purpose | Packages |
+|:--------|:---------|
+| **Unified chat interface** (cloud + local) | **`ellmer`** [@ellmer], **`tidyllm`** [@tidyllm] |
+| **Local models via Ollama** | **`rollama`** [@rollama], `ollamar` [@ollamar] |
+| **LLM over data frame columns** | `mall` [@mall] |
+| **Retrieval-augmented generation** | `ragnar` [@ragnar], `rchroma` |
+| **Evaluation** | `vitals` [@vitals] |
+| **Apps** | `shinychat` [@shinychat], `querychat` (natural language → SQL over data) |
+| **Coding assistants** | `btw` [@btw], `gander` [@gander], `chores` [@chores], `chattr` [@chattr], `gptstudio` [@gptstudio] |
+| **Model Context Protocol** | `mcptools` [@mcptools]: let assistants use your R session, and R use MCP tools |
+| **Vision** | `kuzco` (computer vision with LLMs) [@kuzco] |
+
+::: {.small .muted}
+Today's showcase: **`rollama`** → **`tidyllm`** → **`ellmer`**, from basic to more advanced
+:::
+
+::: notes
+~1.5 min. Many of these are from Posit and build on ellmer. Do not read the table; point to the three bold ones used in the showcase.
+:::
+
+## Showcase: tasks from Parts 1 & 2, done in `r r_blue`
+
+| # | Medical task (Parts 1 & 2) | Package | What we do |
+|:-:|:---------------------------|:--------|:-----------|
+| 1 | Patient communication, translation | `rollama` | Explain a finding in simple Malay, locally |
+| 2 | Triage / text classification | `rollama` | Zero-shot classification of complaints |
+| 3 | Information extraction | `tidyllm` | Structure clinical notes into a data frame |
+| 4 | Extraction **+ evaluation** | `ellmer` | Extract labs from many notes, check against gold standard |
+| 5 | Decision support (calculation) | `ellmer` | Tool calling: R computes eGFR, the LLM explains |
+| 6 | Patient education, grounded in a document | `ragnar` | Retrieval (RAG) over a Malay Wikipedia page |
+| 7 | Simple app | `ellmer` + `shinychat` + `ragnar` | Patient-education chatbot that cites the page |
+
+::: {.small .muted}
+All examples use open-weight models through Ollama on a local PC, except where noted. Full code and output: demo document (next slides).
+:::
+
+::: notes
+~1 min. Map back to the task cards in Part 1 and the table in Part 2.
+:::
+
+## Showcase {.section-slide background-color="#165CAA"}
+
+::: {.center}
+`rollama` · `tidyllm` · `ellmer` · `ragnar` · `shinychat`
+:::
+
+::: notes
+Switch to the demo document (pre-compiled R Markdown HTML) for the showcase, ~12 min. Then return to the slides.
+:::
+
+## Showcase: demo document
+
+:::: {.columns}
+::: {.column width="55%"}
+1. `rollama`: basic local inference
+2. `rollama`: zero-shot triage classification
+3. `tidyllm`: structuring clinical notes
+4. `ellmer`: extraction at scale, then evaluation
+5. `ellmer`: tool calling (eGFR in `r r_blue`)
+6. `ragnar`: grounding answers in a document (RAG)
+7. `ellmer` + `shinychat` + `ragnar`: a patient-education app
+:::
+::: {.column width="45%"}
+::: {.callout-note}
+## Demo
+<https://wnarifin.github.io/workshop.html>
+:::
+
+:::
+::::
+
+
+## Practical considerations
+
+:::: {.columns}
+::: {.column width="50%"}
+#### Privacy & ethics
+- Identifiable patient data → **local models** or approved, contracted services only
+- Ethics approval and data governance as for any data processing
+
+#### Reproducibility
+- Record **model name + version**, prompts, `seed`, `temperature`
+- Keep prompts and code in Quarto / Git
+:::
+::: {.column width="50%"}
+#### Validation
+- Gold standard on a sample; report accuracy **with CIs**, agreement, errors by type
+- Re-validate when the model changes
+
+#### Resources
+- Local: gaming-grade GPU for 3–14B models
+- Cloud: cost per token, rate limits, downtime
+:::
+::::
+
+::: notes
+~1.5 min. These are the things reviewers and ethics committees will ask.
+:::
+
+## Learn more
+
+:::: {.columns}
+::: {.column width="55%"}
+#### Exploring Large Language Models With `r r_blue`
+[wnarifin.github.io/explore_llm_with_r](https://wnarifin.github.io/explore_llm_with_r/) [@arifin2026book]
+
+- Local LLMs, text generation, vision
+- Embeddings, classification
+- RAG, tool calling and agents
+- Fine-tuning and "LLM from scratch" (in progress)
+
+#### Workshop materials
+Structuring clinical notes with `r r_blue` and LLMs: [wnarifin.github.io/workshop.html](https://wnarifin.github.io/workshop.html) [@arifin2026workshop]
+:::
+::: {.column width="45%"}
+#### Package documentation
+- [ellmer.tidyverse.org](https://ellmer.tidyverse.org)
+- [edubruell.github.io/tidyllm](https://edubruell.github.io/tidyllm/)
+- [jbgruber.github.io/rollama](https://jbgruber.github.io/rollama/)
+- [ragnar.tidyverse.org](https://ragnar.tidyverse.org)
+
+#### This talk's code
+<https://github.com/wnarifin/2026-r-conf/>
+:::
+::::
+
+::: notes
+~0.5 min. Invite contributions and feedback on the book.
+:::
+
+## Take-home messages
+
+1. Computers have assisted medicine for **60+ years**; LLMs are the newest assistant, and they speak **text**
+2. LLMs already help with **diagnosis, documentation, summarisation and extraction**, but **evaluation on real data** lags behind
+3. `r py` Python builds the models; `r r_blue` is **highly relevant** for **using** them in medicine: inference, prototyping, text → data, evaluation, apps, reporting
+4. Start with **`rollama`** (local), structure data with **`tidyllm`**, grow with **`ellmer`** and **`ragnar`**
+5. Our biostatistics strengths, **validation, reproducibility, inference**, are exactly what medical LLM work needs
+
+::: {.big-quote}
+Medicine × LLM × `r r_blue`: the centre of the Venn diagram is ours to build `r heart_red`
+:::
+
+::: notes
+~2 min. End on the Venn diagram callback. Then Q&A.
+:::
+
+## References {.scrollable}
+
+::: {#refs}
+:::
+
+## Thank you! {.center}
+
+::: {.center}
+### Dr. Wan Nor Arifin
+wnarifin@usm.my · [wnarifin.github.io](https://wnarifin.github.io)
+
+Slides: [wnarifin.github.io/2026-r-conf](https://wnarifin.github.io/2026-r-conf/)
+:::

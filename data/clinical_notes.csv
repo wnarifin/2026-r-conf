@@ -1,0 +1,9 @@
+id,note,age,sex,sbp,dbp,hba1c,creatinine,smoker
+1,"Encik Razak, a 58-year-old lorry driver, came with polyuria and polydipsia for two months. He smokes 20 cigarettes a day. BP 150/95 mmHg. HbA1c 8.9%. Serum creatinine 132 umol/L.",58,male,150,95,8.9,132,yes
+2,"Puan Siti, 64 years old, retired teacher, follow-up for hypertension. Never smoked. Blood pressure today 138/84. Creatinine 96 umol/L. No HbA1c done this visit.",64,female,138,84,NA,96,no
+3,"Mr. Lim, 45-year-old male engineer, ex-smoker (quit 5 years ago), referred for raised sugar. HbA1c 7.2 percent. BP 128/80 mmHg.",45,male,128,80,7.2,NA,no
+4,"A 71-year-old lady presented with ankle swelling and fatigue. Smoking status not documented. BP 162/90 mmHg. Serum creatinine 210 umol/L; HbA1c 6.4%.",71,female,162,90,6.4,210,unknown
+5,"Ahmad, 33 y/o man, current smoker, attended health screening. Blood pressure 122/78. Fasting labs: HbA1c 5.4%, creatinine 88 umol/L.",33,male,122,78,5.4,88,yes
+6,"Madam Kavitha, aged 52, known type 2 diabetes on metformin. Non-smoker. Today's BP 144/92 mmHg. Latest HbA1c 9.6%, serum creatinine 74 umol/L.",52,female,144,92,9.6,74,no
+7,"Encik Hassan, 67 years old, chronic smoker with cough. BP 135/85 mmHg. Renal profile: creatinine 154 umol/L. Diabetes screening pending.",67,male,135,85,NA,154,yes
+8,"Cik Nurul, 29-year-old woman, 24 weeks pregnant, routine antenatal visit. Denies smoking. BP 118/72 mmHg. HbA1c 5.1%.",29,female,118,72,5.1,NA,no

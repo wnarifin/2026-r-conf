@@ -1,0 +1,475 @@
+---
+title: "Medicine × LLM × R: Showcase"
+subtitle: "Demo for the keynote at R Conference Malaysia 2026"
+author: "Dr. Wan Nor Arifin<br>Department of Biostatistics & Research Methodology, Universiti Sains Malaysia"
+date: "21 November 2026"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 2
+    theme: cosmo
+    highlight: tango
+    code_download: true
+    df_print: paged
+bibliography: references.bib
+link-citations: true
+params:
+  run_llm: true
+---
+
+```{css, echo = FALSE}
+h1, h2, h3, h4, .title { color: #165CAA; }
+.subtitle { color: #272822; }
+a { color: #165CAA; }
+.note {
+  border-left: 4px solid #165CAA;
+  background: #F4F8FC;
+  padding: 0.6em 1em;
+  margin: 1em 0;
+}
+.warn {
+  border-left: 4px solid #C0392B;
+  background: #FDF3F2;
+  padding: 0.6em 1em;
+  margin: 1em 0;
+}
+```
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, comment = "#>", message = FALSE, warning = FALSE)
+run_llm = isTRUE(params$run_llm)  # FALSE: show code only, without calling any LLM
+source("functions.R")
+```
+
+# Introduction
+
+This document accompanies the keynote *Medicine × LLM × R* and shows, step by step, how selected medical tasks from the talk can be carried out with large language models (LLMs) in R. The examples progress from basic inference to retrieval-augmented generation (RAG) and a simple application:
+
+| # | Medical task | Package | Example |
+|:-:|:-------------|:--------|:--------|
+| 1 | Patient communication, translation | `rollama` | Explain laboratory results in simple Malay |
+| 2 | Triage / text classification | `rollama` | Zero-shot classification of complaints |
+| 3 | Information extraction | `tidyllm` | Structure clinical notes into a data frame |
+| 4 | Extraction and evaluation | `ellmer` | Extract variables from notes, evaluate against a gold standard |
+| 5 | Decision support (calculation) | `ellmer` | Tool calling: R computes eGFR, the LLM explains |
+| 6 | Patient education, grounded in a document | `ragnar` | RAG over a Malay Wikipedia page |
+| 7 | Simple application | `ellmer` + `shinychat` + `ragnar` | Patient-education chatbot |
+
+::: {.warn}
+All clinical notes are **synthetic**. The code is for demonstration only and is not intended for clinical use.
+:::
+
+## Requirements
+
+1. [Ollama](https://ollama.com/download), installed and running, with the following models:
+
+    ```
+    ollama pull medgemma1.5:4b   # chat model, Sections 1-4
+    ollama pull qwen3.5:4b       # chat model with tool calling, Section 5
+    ollama pull bge-m3           # multilingual embedding model, Sections 6-7
+    ollama pull hf.co/aisingapore/Apertus-SEA-LION-v4-8B-IT-GGUF:Q8_0   # Malay-capable chat model, Sections 6-7
+    ```
+
+2. R packages:
+
+    ```r
+    install.packages(c("rollama", "tidyllm", "ellmer", "ragnar", "jsonlite",
+                       "shiny", "shinychat", "bslib"))
+    ```
+
+    `MJMSTable` is also used for the descriptive table in Section 3.
+
+3. From the talk's repository: the synthetic notes in `data/clinical_notes.csv`, and the helper functions `clean_thought()` and `extract_num()` in `functions.R`.
+
+The LLM outputs below were generated when this document was compiled; they will differ between models, model versions and runs.
+
+```{r model, eval = run_llm}
+model = "medgemma1.5:4b"   # chat model used throughout
+```
+
+Sections 1–4 use MedGemma, an open-weight medical model [@sellergren2025; @medgemma15].
+
+## R and package versions
+
+```{r version, echo = FALSE}
+pkgs = c("rollama", "tidyllm", "ellmer", "ragnar", "jsonlite", "shinychat")
+data.frame(
+  package = c("R", pkgs),
+  version = c(as.character(getRversion()),
+              vapply(pkgs, \(p) as.character(packageVersion(p)), character(1))),
+  row.names = NULL
+)
+```
+
+# 1. `rollama`: basic local inference
+
+`rollama` sends prompts to models running locally in Ollama [@rollama]. Nothing leaves the computer, which matters for patient data. A fixed `seed` and `temperature = 0` make the output more reproducible. `clean_thought()` (in `functions.R`) removes the model's reasoning text, keeping only the answer.
+
+```{r rollama-setup, eval = run_llm}
+library(rollama)
+ping_ollama()        # is Ollama running?
+# pull_model(model)    # download once
+```
+
+```{r rollama-explain, eval = run_llm}
+finding = "HbA1c 8.9%, fasting glucose 11.2 mmol/L, BP 150/95 mmHg."
+
+query(
+  paste("Explain these results to a patient in simple Bahasa Melayu,",
+        "in 3 sentences. Do not give a diagnosis.", finding),
+  model = model,
+  output = "data.frame", screen = FALSE,
+  model_params = list(seed = 2026, temperature = 0)
+) -> res
+clean_thought(res$response) |> cat()
+```
+
+# 2. `rollama`: zero-shot triage classification
+
+`make_query()` builds a structured prompt from the text, the task and a system role. The result is an ordinary R vector, so the usual tools for diagnostic accuracy and agreement apply.
+
+```{r rollama-triage, eval = run_llm}
+complaints = c(
+  "Crushing chest pain radiating to the left arm, sweating, 30 minutes.",
+  "Mild sore throat for two days, no fever, eating well.",
+  "Sudden weakness of the right arm and slurred speech since this morning."
+)
+
+q = make_query(
+  text   = complaints,
+  prompt = "Classify the triage urgency: 'emergency', 'urgent' or 'non-urgent'.",
+  system = "You are a triage assistant. Answer with one category only, in lowercase."
+)
+
+triage = query(q, model = model, output = "text", screen = FALSE,
+               model_params = list(seed = 2026, temperature = 0)) |> clean_thought()
+
+triage_df = data.frame(complaint = complaints, triage = triage)
+triage_df
+```
+
+Comparison with a reference classification (here, a hypothetical triage nurse):
+
+```{r rollama-triage-table, eval = run_llm}
+nurse = c("emergency", "non-urgent", "emergency")
+table(LLM = triage_df$triage, Nurse = nurse)
+```
+
+# 3. `tidyllm`: structuring clinical notes
+
+`tidyllm` defines the information to extract as a schema; the model is constrained to return JSON that follows it [@tidyllm; @arifin2026workshop].
+
+```{r tidyllm-schema, eval = run_llm}
+library(tidyllm)
+library(jsonlite)
+
+patient_schema = tidyllm_schema(
+  name = "PatientHistory",
+  patient_name = field_chr("Patient's name; empty if not stated"),
+  age = field_dbl("Age in years. If given in months, convert to a fraction of a year."),
+  gender = field_fct("Gender of the patient", .levels = c("male", "female")),
+  symptoms = field_chr("Current symptoms reported by the patient", .vector = TRUE)
+)
+```
+
+One note:
+
+```{r tidyllm-one, eval = run_llm}
+raw_text = "Mrs. Amy, a 35-year-old lady came to the outpatient clinic with the
+            complaint of fever for three days and cough."
+
+result = llm_message(paste("Extract the patient's note according to the schema.", raw_text)) |>
+  chat(.provider = ollama(), .model = model, .json_schema = patient_schema,
+       .temperature = 0, .seed = 2026)
+# Cloud alternative: chat(.provider = gemini(), .model = "gemini-3.1-flash-lite", ...)
+
+get_reply(result) |> minify()
+```
+
+Several notes, saved as JSON Lines and then read into a data frame:
+
+```{r tidyllm-many, eval = run_llm}
+notes = read.csv("data/clinical_notes.csv")
+output_file = "pt_data.jsonl"
+if (file.exists(output_file)) file.remove(output_file)   # start a new file on each run
+
+for (note in notes$note) {
+  tryCatch({
+    llm_message(paste("Extract the patient's note according to the schema.", note)) |>
+      chat(.provider = ollama(), .model = model, .json_schema = patient_schema,
+           .temperature = 0, .seed = 2026) |>
+      get_reply() |> minify() |>
+      cat("\n", file = output_file, append = TRUE, sep = "")
+  }, error = function(e) cat("Error:", conditionMessage(e), "\n"))
+}
+
+patient_data = stream_in(file(output_file), verbose = FALSE)   # read the JSON Lines file
+patient_data
+```
+
+From unstructured text to the descriptive table we already know. 
+
+::: {.note}
+You may download MJMSTable R package from: <https://github.com/wnarifin/MJMSTable>.
+:::
+
+```{r tidyllm-table, eval = run_llm}
+MJMSTable::descriptive_tbl(patient_data, included_var = c("age", "gender"))
+```
+
+# 4. `ellmer`: extraction and evaluation
+
+`ellmer` provides one interface to many providers, cloud and local [@ellmer]. The schema is written with R types, and `parallel_chat_structured()` returns one row per note. For the numeric variables, the model copies the relevant text from the note (e.g. `'132 umol/L'`), or an empty string if the value is not reported.
+
+The synthetic notes contain deliberate traps: an ex-smoker, a note without smoking status, missing laboratory results and "percent" written in words.
+
+```{r notes}
+notes = read.csv("data/clinical_notes.csv")
+notes[, c("id", "note")]
+```
+
+```{r ellmer-extract, eval = run_llm}
+library(ellmer)
+
+type_patient = type_object(
+  age = type_number("Age in years, as written in the note"),
+  sex = type_enum(values = c("male", "female"),
+                  description = "Sex of the patient, from words such as man, lady, Encik, Puan"),
+  bp_text = type_string("Blood pressure value and unit only, copied exactly from the note, e.g. '150/95 mmHg'. Empty string if not reported."),
+  hba1c_text = type_string("HbA1c value and unit only, copied exactly from the note, e.g. '8.9%'. Empty string if not reported."),
+  creatinine_text = type_string("Serum creatinine value and unit only, copied exactly from the note, e.g. '132 umol/L'. Empty string if not reported."),
+  smoker = type_enum(values = c("yes", "no", "unknown"),
+                     description = "Is the patient a CURRENT smoker? Ex-smokers and never-smokers are 'no'. 'unknown' if smoking is not mentioned.")
+)
+
+chat = chat_ollama(
+  model = model,
+  system_prompt = "You extract data from clinical notes. Do not guess values that are not stated.",
+  params = params(temperature = 0, seed = 2026)
+)
+
+extracted = parallel_chat_structured(chat, as.list(notes$note), type = type_patient)
+extracted
+```
+
+A small model often returns wrong or missing numbers when asked for them directly, and may fill in typical values that are not in the note. The LLM is therefore used only to locate the text, and R extracts the numbers from it with `extract_num()` (in `functions.R`). Text without a value, e.g. "No HbA1c done this visit", gives `NA`.
+
+```{r extract-numbers, eval = run_llm}
+extracted$sbp        = extract_num(extracted$bp_text, 1)
+extracted$dbp        = extract_num(extracted$bp_text, 2)
+extracted$hba1c      = extract_num(extracted$hba1c_text)
+extracted$creatinine = extract_num(extracted$creatinine_text)
+extracted
+```
+
+## Evaluation against the gold standard
+
+The gold standard is stored alongside the notes. Agreement is defined as equal values, or missing in both.
+
+```{r gold}
+gold = notes[, c("age", "sex", "sbp", "dbp", "hba1c", "creatinine", "smoker")]
+agree = function(x, y) (is.na(x) & is.na(y)) | (!is.na(x) & !is.na(y) & x == y)
+```
+
+Field-level accuracy (%):
+
+```{r eval-field, eval = run_llm}
+acc = sapply(names(gold), function(x) mean(agree(extracted[[x]], gold[[x]])))
+round(acc * 100, 2)
+```
+
+For systematic evaluation across tasks, models and repeated runs, see `vitals` [@vitals].
+
+# 5. `ellmer`: tool calling, let R do the maths
+
+LLMs are unreliable calculators. An R function is exact and can be validated; the LLM decides **when** to call it and explains the result. The function below implements the race-free CKD-EPI 2021 creatinine equation [@inker2021].
+
+```{r egfr}
+egfr_ckdepi2021 = function(creatinine_umol, age, sex) {
+  scr = creatinine_umol / 88.4                 # umol/L -> mg/dL
+  female = sex == "female"
+  k = ifelse(female, 0.7, 0.9)
+  a = ifelse(female, -0.241, -0.302)
+  142 * pmin(scr / k, 1)^a * pmax(scr / k, 1)^-1.200 *
+    0.9938^age * ifelse(female, 1.012, 1)
+}
+
+egfr_ckdepi2021(132, age = 64, sex = "female") |> round(1)
+```
+
+```{r egfr-tool, eval = run_llm}
+tool_egfr = tool(
+  egfr_ckdepi2021,
+  name = "egfr_ckdepi2021",
+  description = "Estimate GFR (mL/min/1.73 m2) using the race-free CKD-EPI 2021 creatinine equation.",
+  arguments = list(
+    creatinine_umol = type_number("Serum creatinine in umol/L"),
+    age = type_number("Age in years"),
+    sex = type_enum(values = c("male", "female"), description = "Sex of the patient")
+  )
+)
+```
+
+Here we use qwen3.5:4b, because medgemma1.5 does not support tool calling. The answer should give the KDIGO CKD GFR category [@kdigo2012]: an eGFR of 38.9 mL/min/1.73 m² is category G3b, moderately to severely decreased.
+
+```{r use-egfr-tool, eval = run_llm}
+model_tool = "qwen3.5:4b"
+# temperature > 0 for a thinking model: at temperature = 0 it can get stuck in a
+# thinking loop; the fixed seed keeps the run reproducible
+chat = chat_ollama(model = model_tool, params = params(temperature = 0.5, seed = 2026))
+chat$register_tool(tool_egfr)
+
+t0 = Sys.time()
+res_tool = chat$chat("Puan Aminah is a 64-year-old woman with serum creatinine 132 umol/L.
+                     What is her eGFR, which KDIGO CKD GFR category and
+                     which clinical term is it?", echo = "none")
+time_tool = as.numeric(difftime(Sys.time(), t0, units = "secs"))
+
+res_tool
+cat("Time taken (with tool):", round(time_tool, 1), "seconds\n")
+```
+
+For comparison, the same question without the tool. If you try this out, you will notice that qwen3.5:4b takes considerably longer, as it reasons through the calculation itself.
+
+```{r egfr-notool, eval = run_llm}
+chat_no_tool = chat_ollama(model = model_tool, params = params(temperature = 0.5, seed = 2026))
+
+t0 = Sys.time()
+res_no_tool = chat_no_tool$chat("Puan Aminah is a 64-year-old woman with serum creatinine 132 umol/L.
+                                Calculate her eGFR with CKD-EPI 2021 creatinine equation.
+                                Which KDIGO CKD GFR category and which clinical term is it?",
+                                echo = "none")
+time_no_tool = as.numeric(difftime(Sys.time(), t0, units = "secs"))
+
+res_no_tool
+cat("Time taken (without tool):", round(time_no_tool, 1), "seconds\n")
+```
+
+Time and tokens used, with and without the tool:
+
+```{r egfr-compare, eval = run_llm}
+tok_tool = chat$get_tokens()
+tok_no_tool = chat_no_tool$get_tokens()
+
+data.frame(
+  run = c("With tool", "Without tool"),
+  seconds = round(c(time_tool, time_no_tool), 1),
+  assistant_turns = c(nrow(tok_tool), nrow(tok_no_tool)),
+  input_tokens = c(sum(tok_tool$input, na.rm = TRUE), sum(tok_no_tool$input, na.rm = TRUE)),
+  output_tokens = c(sum(tok_tool$output, na.rm = TRUE), sum(tok_no_tool$output, na.rm = TRUE))
+)
+```
+
+# 6. `ragnar`: grounding answers in a document (RAG)
+
+Retrieval-augmented generation (RAG) first retrieves relevant passages from a document store, then lets the LLM answer from them. This reduces hallucination and allows the answer to cite its source [@ragnar]. Here the store is built from the Malay Wikipedia page *Kencing manis*.
+
+::: {.note}
+`read_as_markdown()` cannot read the Wikipedia URL directly, because Wikipedia rejects the default User-Agent of the Python library it uses (HTTP 403). Instead, the article is downloaded as plain text through the Wikipedia API with `download.file()`, which also leaves out the page menus and sidebars, and saved as a markdown file for `read_as_markdown()`.
+:::
+
+```{r ragnar-download, eval = run_llm}
+library(ragnar)
+
+# Plain-text article from the Wikipedia API (no menus or sidebars)
+url = "https://ms.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&redirects=1&format=json&titles=Kencing_manis"
+json_file = "kencing_manis.json"
+md_file = "kencing_manis.md"
+download.file(url, destfile = json_file, mode = "wb")
+writeLines(jsonlite::fromJSON(json_file)$query$pages[[1]]$extract,
+           md_file, useBytes = TRUE)
+```
+
+The store is a DuckDB file. It should be on a local disk: cloud-synced folders (e.g. pCloud Drive) can break DuckDB's temporary write-ahead (`.wal`) file.
+
+```{r ragnar-store, eval = run_llm}
+store_location = path.expand("~/ragnar_store/kencing_manis.duckdb")   # local disk
+dir.create(dirname(store_location), showWarnings = FALSE)
+
+store = ragnar_store_create(
+  store_location,
+  embed = \(x) embed_ollama(x, model = "bge-m3"),   # multilingual embeddings
+  overwrite = TRUE                                  # rebuild from scratch
+)
+
+chunks = read_as_markdown(md_file) |> markdown_chunk()
+chunks
+
+ragnar_store_insert(store, chunks)
+ragnar_store_build_index(store)
+```
+
+Retrieval of the most relevant chunks for a question:
+
+```{r ragnar-retrieve, eval = run_llm}
+ragnar_retrieve(store, "Apakah tanda-tanda kencing manis?", top_k = 3)
+```
+
+The store is registered as a tool, so the LLM searches it before answering. Here we use [Apertus-SEA-LION-v4-8B](https://huggingface.co/aisingapore/Apertus-SEA-LION-v4-8B-IT-GGUF) from AI Singapore, a model that supports Bahasa Melayu:
+
+```{r ragnar-chat, eval = run_llm}
+model_my = "hf.co/aisingapore/Apertus-SEA-LION-v4-8B-IT-GGUF:Q8_0"
+chat = chat_ollama(
+  model = model_my,
+  system_prompt = paste(
+    "You explain diabetes to patients in simple Malay or English.",
+    "Search the knowledge store before answering and cite it.",
+    "You do not diagnose. Always advise seeing a doctor."
+  ),
+  params = params(temperature = 0, seed = 2026)
+)
+ragnar_register_tool_retrieve(chat, store, top_k = 5)
+chat$chat("Apakah tanda-tanda awal kencing manis?")
+```
+
+The same steps apply to other documents, for example a local clinical practice guideline in PDF: `read_as_markdown("path/to/cpg.pdf")`.
+
+# 7. `ellmer` + `shinychat` + `ragnar`: a patient-education app
+
+A Shiny app cannot run inside a static HTML document. Run the code below in R (or `code/06_ellmer_shinychat_ragnar_app.R`) after building the store in Section 6 [@shinychat].
+
+```{r app, eval = FALSE}
+library(shiny)
+library(shinychat)
+library(ellmer)
+library(ragnar)
+
+store_location = path.expand("~/ragnar_store/kencing_manis.duckdb")   # as in Section 6
+store = ragnar_store_connect(store_location, read_only = TRUE)
+
+ui = bslib::page_fillable(
+  bslib::card(
+    bslib::card_header("Pembantu pendidikan pesakit: kencing manis (demo)"),
+    chat_ui("chat")
+  )
+)
+
+model_my = "hf.co/aisingapore/Apertus-SEA-LION-v4-8B-IT-GGUF:Q8_0"
+server = function(input, output, session) {
+  chat = chat_ollama(
+    model = model_my,
+    system_prompt = "You explain diabetes to patients in simple Malay or English.
+      Search the knowledge store before answering and cite it.
+      You do not diagnose. Always advise seeing a doctor."
+  )
+  ragnar_register_tool_retrieve(chat, store, top_k = 5)
+  chat_server("chat", chat, history = FALSE)
+}
+
+shinyApp(ui, server)
+```
+
+For a quick personal chat in the browser, without writing an app:
+
+```{r live-browser, eval = FALSE}
+chat = chat_ollama(model = model_my)
+ragnar_register_tool_retrieve(chat, store)
+live_browser(chat)
+```
+
+::: {.warn}
+**Not a virtual doctor.** Keep a human in the loop and validate any tool before clinical use. Wikipedia is used here only as an openly licensed example; for practice, use authoritative sources such as clinical practice guidelines.
+:::
+
+# References
