@@ -65,6 +65,14 @@ theme_blue = "#165CAA"; theme_red = "#C0392B"; theme_purple = "#7D3C98"
 Time plan (45 min): Part 1 ~8 min, Part 2 ~10 min, Part 3 ~20 min, wrap-up ~4 min, Q&A remainder.
 :::
 
+## Slides download {.nostretch}
+
+![](img/qrcode.png){fig-align="center" width="300px" fig-alt="QR code linking to the slides"}
+
+::: {.center}
+<https://wnarifin.github.io/2026-r-conf/>
+:::
+
 ## Medicine × LLM × `r r_blue` {.center}
 
 ```{r venn}
@@ -82,14 +90,14 @@ circles = rbind(
   circle( 0.00, -0.68, group = "R")
 )
 labs_main = data.frame(
-  x = c(-1.12, 1.12, 0),
+  x = c(-0.9, 0.9, 0),
   y = c(0.88, 0.88, -1.30),
   lab = c("Medicine", "LLM", "R"),
   col = c(theme_red, theme_purple, theme_blue)
 )
 labs_int = data.frame(
-  x = c(0, -0.80, 0.80, 0),
-  y = c(1.00, -0.42, -0.42, 0.06),
+  x = c(0, -0.55, 0.55, 0),
+  y = c(0.5, -0.32, -0.32, 0.06),
   lab = c("Clinical LLMs\ndiagnosis, notes",
           "Biostatistics\nepidemiology",
           "ellmer, tidyllm\nrollama",
@@ -168,6 +176,7 @@ Common thread: **large volume**, **complex reasoning**, **repetitive work**, whe
 
 ::: notes
 ~1.5 min. These are the recurring "pain points". The red cards (documentation, evidence synthesis) are mostly text: that is where LLMs will come in later.
+Protein discovery -- alphafold <- alphago
 :::
 
 ## From computer-aided diagnosis to AI: a timeline
@@ -272,7 +281,7 @@ Lesson: **workflow fit** and **real-world evaluation** decide success
 ::: {.column width="55%"}
 - **Retina**: diabetic retinopathy, AUC 0.99 [@gulshan2016]
 - **Skin**: CNN on par with 21 dermatologists [@esteva2017]
-- **First autonomous AI** authorised by FDA: sensitivity 87.2%, specificity 90.7% [@abramoff2018]
+- **First autonomous AI** authorised by FDA for diabetic retinopathy: sensitivity 87.2%, specificity 90.7% [@abramoff2018]
 - **Breast screening**: fewer false positives and negatives than radiologists [@mckinney2020]
 - **COVID-19**: chest CT + clinical data, AUC 0.92 [@mei2020]
 - **AlphaFold**: protein structure prediction [@jumper2021]
@@ -718,9 +727,11 @@ Medicine × LLM × `r r_blue`: the centre of the Venn diagram is ours to build `
 ::: {#refs}
 :::
 
-## Thank you! {.center}
+## {.center}
 
 ::: {.center}
+[Thank you!]{.thank-you}
+
 ### Dr. Wan Nor Arifin
 wnarifin@usm.my · [wnarifin.github.io](https://wnarifin.github.io)
 

@@ -6,8 +6,8 @@
 <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-065a5179aebd64318d7ea99d77b64a9e.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.25">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting-5c1318cf63eba56dbef7ba16bc7d56f5.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Dr.&nbsp;Wan Nor Arifin">
   <meta name="dcterms.date" content="2026-11-21">
@@ -18,10 +18,16 @@
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -33,7 +39,6 @@
     div.csl-bib-body { }
     div.csl-entry {
       clear: both;
-      margin-bottom: 0em;
     }
     .hanging-indent div.csl-entry {
       margin-left:2em;
@@ -50,7 +55,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-36bfefefabc56f90428c96910f189eeb.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto-67e666290c388a3164fc2c70e0b3a610.css">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -154,7 +159,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Dr.&nbsp;Wan Nor Arifin 
+Dr.&nbsp;Wan Nor Arifin
 </div>
         <p class="quarto-title-affiliation">
             Department of Biostatistics &amp; Research Methodology, Universiti Sains Malaysia
@@ -189,6 +194,17 @@ Dr.&nbsp;Wan Nor Arifin
           display:block!important;
       }</style></aside>
 </section>
+<section class="slide level2 nostretch">
+<h2>Slides download</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="img/qrcode.png" class="quarto-figure quarto-figure-center" alt="QR code linking to the slides" width="300"></p>
+</figure>
+</div>
+<div class="center">
+<p><a href="https://wnarifin.github.io/2026-r-conf/" class="uri">https://wnarifin.github.io/2026-r-conf/</a></p>
+</div>
+</section>
 <section class="slide level2 center">
 <h2>Medicine × LLM × <svg aria-hidden="true" role="img" viewbox="0 0 581 512" style="height:1em;width:1.13em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#165CAA;overflow:visible;position:relative;"><path d="M581 226.6C581 119.1 450.9 32 290.5 32S0 119.1 0 226.6C0 322.4 103.3 402 239.4 418.1V480h99.1v-61.5c24.3-2.7 47.6-7.4 69.4-13.9L448 480h112l-67.4-113.7c54.5-35.4 88.4-84.9 88.4-139.7zm-466.8 14.5c0-73.5 98.9-133 220.8-133s211.9 40.7 211.9 133c0 50.1-26.5 85-70.3 106.4-2.4-1.6-4.7-2.9-6.4-3.7-10.2-5.2-27.8-10.5-27.8-10.5s86.6-6.4 86.6-92.7-90.6-87.9-90.6-87.9h-199V361c-74.1-21.5-125.2-67.1-125.2-119.9zm225.1 38.3v-55.6c57.8 0 87.8-6.8 87.8 27.3 0 36.5-38.2 28.3-87.8 28.3zm-.9 72.5H365c10.8 0 18.9 11.7 24 19.2-16.1 1.9-33 2.8-50.6 2.9v-22.1z"></path></svg></h2>
 
@@ -214,19 +230,19 @@ Dr.&nbsp;Wan Nor Arifin
 <div class="cards">
 <div class="card">
 <p><span class="card-title">Diagnosis</span></p>
-<p>Differential diagnosis, probabilistic reasoning <span class="citation" data-cites="ledley1959 dedombal1972">(<a href="#/references" role="doc-biblioref" onclick="">Ledley and Lusted 1959</a>; <a href="#/references" role="doc-biblioref" onclick="">de Dombal et al. 1972</a>)</span></p>
+<p>Differential diagnosis, probabilistic reasoning <span class="citation" data-cites="ledley1959 dedombal1972">(<a href="#/references" role="doc-biblioref" onclick="">Ledley and Lusted 1959</a>; <a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">de Dombal et al.</span> 1972</a>)</span></p>
 </div>
 <div class="card">
 <p><span class="card-title">Medical imaging</span></p>
-<p>Detection and classification in radiology, retina, skin <span class="citation" data-cites="doi2007 gulshan2016">(<a href="#/references" role="doc-biblioref" onclick="">Doi 2007</a>; <a href="#/references" role="doc-biblioref" onclick="">Gulshan et al. 2016</a>)</span></p>
+<p>Detection and classification in radiology, retina, skin <span class="citation" data-cites="doi2007 gulshan2016">(<a href="#/references" role="doc-biblioref" onclick="">Doi 2007</a>; <a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Gulshan et al.</span> 2016</a>)</span></p>
 </div>
 <div class="card">
 <p><span class="card-title">Decision support</span></p>
-<p>Alerts, order checking, guideline reminders <span class="citation" data-cites="bates1998 kawamoto2005">(<a href="#/references" role="doc-biblioref" onclick="">Bates et al. 1998</a>; <a href="#/references" role="doc-biblioref" onclick="">Kawamoto et al. 2005</a>)</span></p>
+<p>Alerts, order checking, guideline reminders <span class="citation" data-cites="bates1998 kawamoto2005">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Bates et al.</span> 1998</a>; <a href="#/references" role="doc-biblioref" onclick="">Kawamoto et al. 2005</a>)</span></p>
 </div>
 <div class="card">
 <p><span class="card-title">Prediction</span></p>
-<p>Risk scores and early warning, e.g.&nbsp;sepsis <span class="citation" data-cites="wong2021">(<a href="#/references" role="doc-biblioref" onclick="">Wong et al. 2021</a>)</span></p>
+<p>Risk scores and early warning, e.g.&nbsp;sepsis <span class="citation" data-cites="wong2021">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Wong et al.</span> 2021</a>)</span></p>
 </div>
 <div class="card c-red">
 <p><span class="card-title">Documentation</span></p>
@@ -234,11 +250,11 @@ Dr.&nbsp;Wan Nor Arifin
 </div>
 <div class="card c-red">
 <p><span class="card-title">Evidence synthesis</span></p>
-<p>Searching, screening and extracting data from studies <span class="citation" data-cites="gartlehner2024">(<a href="#/references" role="doc-biblioref" onclick="">Gartlehner et al. 2024</a>)</span></p>
+<p>Searching, screening and extracting data from studies <span class="citation" data-cites="gartlehner2024">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Gartlehner et al.</span> 2024</a>)</span></p>
 </div>
 <div class="card c-purple">
 <p><span class="card-title">Discovery</span></p>
-<p>Protein structure, drug targets <span class="citation" data-cites="jumper2021">(<a href="#/references" role="doc-biblioref" onclick="">Jumper et al. 2021</a>)</span></p>
+<p>Protein structure, drug targets <span class="citation" data-cites="jumper2021">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Jumper et al.</span> 2021</a>)</span></p>
 </div>
 <div class="card c-purple">
 <p><span class="card-title">Research &amp; education</span></p>
@@ -249,7 +265,7 @@ Dr.&nbsp;Wan Nor Arifin
 <p>Common thread: <strong>large volume</strong>, <strong>complex reasoning</strong>, <strong>repetitive work</strong>, where humans tire and err.</p>
 </div>
 <aside class="notes">
-<p>~1.5 min. These are the recurring “pain points”. The red cards (documentation, evidence synthesis) are mostly text: that is where LLMs will come in later.</p>
+<p>~1.5 min. These are the recurring “pain points”. The red cards (documentation, evidence synthesis) are mostly text: that is where LLMs will come in later. Protein discovery – alphafold &lt;- alphago</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -266,7 +282,7 @@ Dr.&nbsp;Wan Nor Arifin
 <h2>From computer-aided diagnosis to AI: a timeline</h2>
 
 <img data-src="index_files/figure-revealjs/timeline-cad-1.png" style="width:100.0%" class="r-stretch"><div class="tiny muted">
-<p><span class="citation" data-cites="ledley1959">Ledley and Lusted (<a href="#/references" role="doc-biblioref" onclick="">1959</a>)</span>; <span class="citation" data-cites="dedombal1972">de Dombal et al. (<a href="#/references" role="doc-biblioref" onclick="">1972</a>)</span>; <span class="citation" data-cites="shortliffe1976">Shortliffe (<a href="#/references" role="doc-biblioref" onclick="">1976</a>)</span>; <span class="citation" data-cites="miller1982">Miller, Pople, and Myers (<a href="#/references" role="doc-biblioref" onclick="">1982</a>)</span>; <span class="citation" data-cites="bates1998">Bates et al. (<a href="#/references" role="doc-biblioref" onclick="">1998</a>)</span>; <span class="citation" data-cites="doi2007">Doi (<a href="#/references" role="doc-biblioref" onclick="">2007</a>)</span>; <span class="citation" data-cites="kawamoto2005">Kawamoto et al. (<a href="#/references" role="doc-biblioref" onclick="">2005</a>)</span>; <span class="citation" data-cites="gulshan2016">Gulshan et al. (<a href="#/references" role="doc-biblioref" onclick="">2016</a>)</span>; <span class="citation" data-cites="abramoff2018">Abràmoff et al. (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span>; <span class="citation" data-cites="mckinney2020">McKinney et al. (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span>; <span class="citation" data-cites="wynants2020">Wynants et al. (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span>; <span class="citation" data-cites="jumper2021">Jumper et al. (<a href="#/references" role="doc-biblioref" onclick="">2021</a>)</span></p>
+<p><span class="citation" data-cites="ledley1959">Ledley and Lusted (<a href="#/references" role="doc-biblioref" onclick="">1959</a>)</span>; <span class="citation" data-cites="dedombal1972"><span class="nocase">de Dombal et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">1972</a>)</span>; <span class="citation" data-cites="shortliffe1976">Shortliffe (<a href="#/references" role="doc-biblioref" onclick="">1976</a>)</span>; <span class="citation" data-cites="miller1982">Miller et al. (<a href="#/references" role="doc-biblioref" onclick="">1982</a>)</span>; <span class="citation" data-cites="bates1998"><span class="nocase">Bates et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">1998</a>)</span>; <span class="citation" data-cites="doi2007">Doi (<a href="#/references" role="doc-biblioref" onclick="">2007</a>)</span>; <span class="citation" data-cites="kawamoto2005">Kawamoto et al. (<a href="#/references" role="doc-biblioref" onclick="">2005</a>)</span>; <span class="citation" data-cites="gulshan2016"><span class="nocase">Gulshan et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">2016</a>)</span>; <span class="citation" data-cites="abramoff2018">Abràmoff et al. (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span>; <span class="citation" data-cites="mckinney2020"><span class="nocase">McKinney et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span>; <span class="citation" data-cites="wynants2020"><span class="nocase">Wynants et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span>; <span class="citation" data-cites="jumper2021"><span class="nocase">Jumper et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">2021</a>)</span></p>
 </div>
 <aside class="notes">
 <p>~1 min. Three eras. Emphasise that “computer-aided diagnosis” is more than 60 years old: AI in medicine did not start with ChatGPT.</p>
@@ -288,12 +304,12 @@ Dr.&nbsp;Wan Nor Arifin
 <div class="column" style="width:55%;">
 <ul>
 <li><strong><span class="citation" data-cites="ledley1959">Ledley and Lusted (<a href="#/references" role="doc-biblioref" onclick="">1959</a>)</span></strong>: diagnosis as symbolic logic + probability (Bayes) + value theory</li>
-<li><strong><span class="citation" data-cites="dedombal1972">de Dombal et al. (<a href="#/references" role="doc-biblioref" onclick="">1972</a>)</span></strong>: prospective real-time comparison in 304 patients with acute abdominal pain
+<li><strong><span class="citation" data-cites="dedombal1972"><span class="nocase">de Dombal et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">1972</a>)</span></strong>: prospective real-time comparison in 304 patients with acute abdominal pain
 <ul>
 <li>Computer accuracy <strong>91.8%</strong> <em>vs</em> most senior clinician <strong>79.6%</strong></li>
 </ul></li>
 <li><strong>MYCIN</strong> <span class="citation" data-cites="shortliffe1976">(<a href="#/references" role="doc-biblioref" onclick="">Shortliffe 1976</a>)</span>: if–then rules for infections and antibiotic choice</li>
-<li><strong>INTERNIST-1</strong> <span class="citation" data-cites="miller1982">(<a href="#/references" role="doc-biblioref" onclick="">Miller, Pople, and Myers 1982</a>)</span>: diagnostic consultant for general internal medicine</li>
+<li><strong>INTERNIST-1</strong> <span class="citation" data-cites="miller1982">(<a href="#/references" role="doc-biblioref" onclick="">Miller et al. 1982</a>)</span>: diagnostic consultant for general internal medicine</li>
 </ul>
 </div><div class="column" style="width:45%;">
 <div class="big-quote">
@@ -323,14 +339,14 @@ Dr.&nbsp;Wan Nor Arifin
 <div class="column" style="width:50%;">
 <h4>Clinical decision support</h4>
 <ul>
-<li>Computerised physician order entry: nonintercepted serious medication errors <strong>↓ 55%</strong> <span class="citation" data-cites="bates1998">(<a href="#/references" role="doc-biblioref" onclick="">Bates et al. 1998</a>)</span></li>
+<li>Computerised physician order entry: nonintercepted serious medication errors <strong>↓ 55%</strong> <span class="citation" data-cites="bates1998">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Bates et al.</span> 1998</a>)</span></li>
 <li>Systematic review of 70 RCTs: decision support improved practice in <strong>68%</strong> of trials; best when <strong>automatic and within workflow</strong> <span class="citation" data-cites="kawamoto2005">(<a href="#/references" role="doc-biblioref" onclick="">Kawamoto et al. 2005</a>)</span></li>
 </ul>
 </div><div class="column" style="width:50%;">
 <h4>CAD in imaging</h4>
 <ul>
 <li>Mammography CAD approved by FDA in 1998 <span class="citation" data-cites="doi2007">(<a href="#/references" role="doc-biblioref" onclick="">Doi 2007</a>)</span></li>
-<li>But in real-world use, sensitivity <strong>↑</strong> (not sig.), specificity <strong>↓</strong>, and biopsy rate <strong>↑ 19.7%</strong>; increased potential harms of screening mammography with uncertain clinical benefit <span class="citation" data-cites="fenton2007">(<a href="#/references" role="doc-biblioref" onclick="">Fenton et al. 2007</a>)</span></li>
+<li>But in real-world use, sensitivity <strong>↑</strong> (not sig.), specificity <strong>↓</strong>, and biopsy rate <strong>↑ 19.7%</strong>; increased potential harms of screening mammography with uncertain clinical benefit <span class="citation" data-cites="fenton2007">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Fenton et al.</span> 2007</a>)</span></li>
 </ul>
 </div></div>
 <div class="big-quote">
@@ -355,12 +371,12 @@ Dr.&nbsp;Wan Nor Arifin
 <div class="columns">
 <div class="column" style="width:55%;">
 <ul>
-<li><strong>Retina</strong>: diabetic retinopathy, AUC 0.99 <span class="citation" data-cites="gulshan2016">(<a href="#/references" role="doc-biblioref" onclick="">Gulshan et al. 2016</a>)</span></li>
+<li><strong>Retina</strong>: diabetic retinopathy, AUC 0.99 <span class="citation" data-cites="gulshan2016">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Gulshan et al.</span> 2016</a>)</span></li>
 <li><strong>Skin</strong>: CNN on par with 21 dermatologists <span class="citation" data-cites="esteva2017">(<a href="#/references" role="doc-biblioref" onclick="">Esteva et al. 2017</a>)</span></li>
-<li><strong>First autonomous AI</strong> authorised by FDA: sensitivity 87.2%, specificity 90.7% <span class="citation" data-cites="abramoff2018">(<a href="#/references" role="doc-biblioref" onclick="">Abràmoff et al. 2018</a>)</span></li>
-<li><strong>Breast screening</strong>: fewer false positives and negatives than radiologists <span class="citation" data-cites="mckinney2020">(<a href="#/references" role="doc-biblioref" onclick="">McKinney et al. 2020</a>)</span></li>
-<li><strong>COVID-19</strong>: chest CT + clinical data, AUC 0.92 <span class="citation" data-cites="mei2020">(<a href="#/references" role="doc-biblioref" onclick="">Mei et al. 2020</a>)</span></li>
-<li><strong>AlphaFold</strong>: protein structure prediction <span class="citation" data-cites="jumper2021">(<a href="#/references" role="doc-biblioref" onclick="">Jumper et al. 2021</a>)</span></li>
+<li><strong>First autonomous AI</strong> authorised by FDA for diabetic retinopathy: sensitivity 87.2%, specificity 90.7% <span class="citation" data-cites="abramoff2018">(<a href="#/references" role="doc-biblioref" onclick="">Abràmoff et al. 2018</a>)</span></li>
+<li><strong>Breast screening</strong>: fewer false positives and negatives than radiologists <span class="citation" data-cites="mckinney2020">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">McKinney et al.</span> 2020</a>)</span></li>
+<li><strong>COVID-19</strong>: chest CT + clinical data, AUC 0.92 <span class="citation" data-cites="mei2020">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Mei et al.</span> 2020</a>)</span></li>
+<li><strong>AlphaFold</strong>: protein structure prediction <span class="citation" data-cites="jumper2021">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Jumper et al.</span> 2021</a>)</span></li>
 </ul>
 </div><div class="column" style="width:45%;">
 <div class="callout callout-warning callout-titled callout-style-default">
@@ -372,7 +388,7 @@ Dr.&nbsp;Wan Nor Arifin
 <p><strong>A cautionary tale</strong></p>
 </div>
 <div class="callout-content">
-<p>A widely implemented proprietary sepsis model: AUC <strong>0.63</strong> on external validation, missed <strong>67%</strong> of sepsis cases, but alerts for 18% of all inpatients – alert fatigue <span class="citation" data-cites="wong2021">(<a href="#/references" role="doc-biblioref" onclick="">Wong et al. 2021</a>)</span></p>
+<p>A widely implemented proprietary sepsis model: AUC <strong>0.63</strong> on external validation, missed <strong>67%</strong> of sepsis cases, but alerts for 18% of all inpatients – alert fatigue <span class="citation" data-cites="wong2021">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Wong et al.</span> 2021</a>)</span></p>
 </div>
 </div>
 </div>
@@ -400,15 +416,15 @@ Dr.&nbsp;Wan Nor Arifin
 <div class="column" style="width:50%;">
 <h4>The promise</h4>
 <ul>
-<li>Urgent need: RT-PCR took up to 2 days and test kits were short <span class="citation" data-cites="mei2020">(<a href="#/references" role="doc-biblioref" onclick="">Mei et al. 2020</a>)</span></li>
+<li>Urgent need: RT-PCR took up to 2 days and test kits were short <span class="citation" data-cites="mei2020">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Mei et al.</span> 2020</a>)</span></li>
 <li>AI on chest CT and X-ray looked like a fast answer</li>
 <li>Within months: <strong>hundreds</strong> of diagnostic and prognostic models</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <h4>The reality</h4>
 <ul>
-<li>Systematic review of 731 prediction models: “Most published prediction model studies were poorly reported and at high risk of bias such that their reported predictive performances are probably optimistic” <span class="citation" data-cites="wynants2020">(<a href="#/references" role="doc-biblioref" onclick="">Wynants et al. 2020</a>)</span></li>
-<li>Systematic review of 62 studies on machine learning for COVID-19 imaging: <strong>none</strong> “… are of potential clinical use due to methodological flaws and/or underlying biases” <span class="citation" data-cites="roberts2021">(<a href="#/references" role="doc-biblioref" onclick="">Roberts et al. 2021</a>)</span></li>
+<li>Systematic review of 731 prediction models: “Most published prediction model studies were poorly reported and at high risk of bias such that their reported predictive performances are probably optimistic” <span class="citation" data-cites="wynants2020">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Wynants et al.</span> 2020</a>)</span></li>
+<li>Systematic review of 62 studies on machine learning for COVID-19 imaging: <strong>none</strong> “… are of potential clinical use due to methodological flaws and/or underlying biases” <span class="citation" data-cites="roberts2021">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Roberts et al.</span> 2021</a>)</span></li>
 </ul>
 </div></div>
 <div class="big-quote">
@@ -462,7 +478,7 @@ Dr.&nbsp;Wan Nor Arifin
 <h2>From “Attention is all you need” to today</h2>
 
 <img data-src="index_files/figure-revealjs/timeline-llm-1.png" style="width:100.0%" class="r-stretch"><div class="tiny muted">
-<p><span class="citation" data-cites="vaswani2017">Vaswani et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span>; <span class="citation" data-cites="radford2018">Radford et al. (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span>; <span class="citation" data-cites="devlin2019">Devlin et al. (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span>; <span class="citation" data-cites="radford2019">Radford et al. (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span>; <span class="citation" data-cites="brown2020">Brown et al. (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span>; <span class="citation" data-cites="ouyang2022">Ouyang et al. (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span>; <span class="citation" data-cites="openai2022">OpenAI (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span>; <span class="citation" data-cites="openai2023">OpenAI (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span>; <span class="citation" data-cites="touvron2023">Touvron et al. (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span>; <span class="citation" data-cites="singhal2023">Singhal et al. (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span>; <span class="citation" data-cites="singhal2025">Singhal et al. (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span>; <span class="citation" data-cites="guo2025">Guo et al. (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span>; <span class="citation" data-cites="sellergren2025">Sellergren et al. (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span>; <span class="citation" data-cites="medgemma15">Google Research and Google DeepMind (<a href="#/references" role="doc-biblioref" onclick="">2026</a>)</span>; <span class="citation" data-cites="mcduff2025">McDuff et al. (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span>; <span class="citation" data-cites="osullivan2026">O’Sullivan et al. (<a href="#/references" role="doc-biblioref" onclick="">2026</a>)</span></p>
+<p><span class="citation" data-cites="vaswani2017">Vaswani et al. (<a href="#/references" role="doc-biblioref" onclick="">2017</a>)</span>; <span class="citation" data-cites="radford2018">Radford et al. (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span>; <span class="citation" data-cites="devlin2019">Devlin et al. (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span>; <span class="citation" data-cites="radford2019">Radford et al. (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span>; <span class="citation" data-cites="brown2020"><span class="nocase">Brown et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span>; <span class="citation" data-cites="ouyang2022"><span class="nocase">Ouyang et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span>; <span class="citation" data-cites="openai2022">OpenAI (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span>; <span class="citation" data-cites="openai2023">OpenAI (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span>; <span class="citation" data-cites="touvron2023"><span class="nocase">Touvron et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span>; <span class="citation" data-cites="singhal2023"><span class="nocase">Singhal et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span>; <span class="citation" data-cites="singhal2025"><span class="nocase">Singhal et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span>; <span class="citation" data-cites="guo2025"><span class="nocase">Guo et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span>; <span class="citation" data-cites="sellergren2025"><span class="nocase">Sellergren et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span>; <span class="citation" data-cites="medgemma15">Google Research and Google DeepMind (<a href="#/references" role="doc-biblioref" onclick="">2026</a>)</span>; <span class="citation" data-cites="mcduff2025"><span class="nocase">McDuff et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span>; <span class="citation" data-cites="osullivan2026"><span class="nocase">O’Sullivan et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">2026</a>)</span></p>
 </div>
 <aside class="notes">
 <p>~2 min. Keep it brief. Key turning points: Transformer (2017), decoder-only generative pre-training (GPT, 2018), scale (GPT-3, 2020), instruction following (InstructGPT) and ChatGPT (Nov 2022). Since then: open-weight models (Llama, Qwen, Gemma…), reasoning models, multimodal, agents. MedGemma (Google, 2025): open-weight medical models built on Gemma 3 (4B multimodal, 27B), updated as MedGemma 1.5 4B in 2026; available in Ollama, so usable from R locally (Part 3).</p>
@@ -484,13 +500,13 @@ Dr.&nbsp;Wan Nor Arifin
 <div class="column" style="width:50%;">
 <h4>Medical exams</h4>
 <ul>
-<li>ChatGPT at or near the <strong>passing threshold</strong> on all three USMLE steps, without specialised training <span class="citation" data-cites="kung2023">(<a href="#/references" role="doc-biblioref" onclick="">Kung et al. 2023</a>)</span></li>
-<li>Med-PaLM: <strong>67.6%</strong> on MedQA <span class="citation" data-cites="singhal2023">(<a href="#/references" role="doc-biblioref" onclick="">Singhal et al. 2023</a>)</span> → Med-PaLM 2: <strong>86.5%</strong> <span class="citation" data-cites="singhal2025">(<a href="#/references" role="doc-biblioref" onclick="">Singhal et al. 2025</a>)</span></li>
+<li>ChatGPT at or near the <strong>passing threshold</strong> on all three USMLE steps, without specialised training <span class="citation" data-cites="kung2023">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Kung et al.</span> 2023</a>)</span></li>
+<li>Med-PaLM: <strong>67.6%</strong> on MedQA <span class="citation" data-cites="singhal2023">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Singhal et al.</span> 2023</a>)</span> → Med-PaLM 2: <strong>86.5%</strong> <span class="citation" data-cites="singhal2025">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Singhal et al.</span> 2025</a>)</span></li>
 </ul>
 </div><div class="column" style="width:50%;">
 <h4>Communication with patients</h4>
 <ul>
-<li>195 patient questions from a public forum: evaluators preferred chatbot responses to physician responses in <strong>78.6%</strong> evaluations – better quality, more empathic than human physicians <span class="citation" data-cites="ayers2023">(<a href="#/references" role="doc-biblioref" onclick="">Ayers et al. 2023</a>)</span></li>
+<li>195 patient questions from a public forum: evaluators preferred chatbot responses to physician responses in <strong>78.6%</strong> evaluations – better quality, more empathic than human physicians <span class="citation" data-cites="ayers2023">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Ayers et al.</span> 2023</a>)</span></li>
 </ul>
 </div></div>
 <div class="callout callout-note callout-titled callout-style-default">
@@ -502,7 +518,7 @@ Dr.&nbsp;Wan Nor Arifin
 <p><strong>But …</strong></p>
 </div>
 <div class="callout-content">
-<p>Of 519 LLM evaluation studies (2022–2024), only <strong>5%</strong> used real patient-care data <span class="citation" data-cites="bedi2025">(<a href="#/references" role="doc-biblioref" onclick="">Bedi et al. 2025</a>)</span>. So, is it valid?</p>
+<p>Of 519 LLM evaluation studies (2022–2024), only <strong>5%</strong> used real patient-care data <span class="citation" data-cites="bedi2025">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Bedi et al.</span> 2025</a>)</span>. So, is it valid?</p>
 </div>
 </div>
 </div>
@@ -538,42 +554,42 @@ Dr.&nbsp;Wan Nor Arifin
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><strong>Diagnosis</strong></td>
-<td style="text-align: left;">AMIE, 302 differential diagnoses of complex cases <span class="citation" data-cites="mcduff2025">(<a href="#/references" role="doc-biblioref" onclick="">McDuff et al. 2025</a>)</span></td>
+<td style="text-align: left;">AMIE, 302 differential diagnoses of complex cases <span class="citation" data-cites="mcduff2025">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">McDuff et al.</span> 2025</a>)</span></td>
 <td style="text-align: left;">Top-10 accuracy: AMIE alone 59.1% <em>vs</em> unassisted clinicians 33.6%</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">Physician RCT <span class="citation" data-cites="goh2024">(<a href="#/references" role="doc-biblioref" onclick="">Goh et al. 2024</a>)</span></td>
+<td style="text-align: left;">Physician RCT <span class="citation" data-cites="goh2024">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Goh et al.</span> 2024</a>)</span></td>
 <td style="text-align: left;">LLM access did <em>not</em> improve physicians’ diagnostic reasoning; but the LLM alone scored 16 percentage points higher than physicians with conventional resources</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">Cardiology RCT <span class="citation" data-cites="osullivan2026">(<a href="#/references" role="doc-biblioref" onclick="">O’Sullivan et al. 2026</a>)</span></td>
+<td style="text-align: left;">Cardiology RCT <span class="citation" data-cites="osullivan2026">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">O’Sullivan et al.</span> 2026</a>)</span></td>
 <td style="text-align: left;">Fewer clinical errors with AMIE assistance (13.1% <em>vs</em> 24.3%)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>Documentation</strong></td>
-<td style="text-align: left;">Ambient AI scribes, RCTs <span class="citation" data-cites="lukac2025 afshar2025">(<a href="#/references" role="doc-biblioref" onclick="">Lukac et al. 2025</a>; <a href="#/references" role="doc-biblioref" onclick="">Afshar et al. 2025</a>)</span></td>
+<td style="text-align: left;">Ambient AI scribes, RCTs <span class="citation" data-cites="lukac2025 afshar2025">(<a href="#/references" role="doc-biblioref" onclick="">Lukac et al. 2025</a>; <a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Afshar et al.</span> 2025</a>)</span></td>
 <td style="text-align: left;">Less time in notes, less work exhaustion; occasional inaccuracies</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>Summarisation</strong></td>
-<td style="text-align: left;">4 clinical summarisation tasks <span class="citation" data-cites="vanveen2024">(<a href="#/references" role="doc-biblioref" onclick="">Van Veen et al. 2024</a>)</span></td>
+<td style="text-align: left;">4 clinical summarisation tasks <span class="citation" data-cites="vanveen2024">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Van Veen et al.</span> 2024</a>)</span></td>
 <td style="text-align: left;">LLM summaries were superior to medical experts’ in 36% of cases (equivalent in 45%)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>Information extraction</strong></td>
-<td style="text-align: left;">1026 lung cancer, 191 pediatric osteosarcoma pathology reports <span class="citation" data-cites="huang2024">(<a href="#/references" role="doc-biblioref" onclick="">Huang et al. 2024</a>)</span></td>
+<td style="text-align: left;">1026 lung cancer, 191 pediatric osteosarcoma pathology reports <span class="citation" data-cites="huang2024">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Huang et al.</span> 2024</a>)</span></td>
 <td style="text-align: left;">classification accuracy: 89% and 98.6% respectively</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>Evidence synthesis</strong></td>
-<td style="text-align: left;">Data extraction from RCTs for systematic review <span class="citation" data-cites="gartlehner2024">(<a href="#/references" role="doc-biblioref" onclick="">Gartlehner et al. 2024</a>)</span></td>
+<td style="text-align: left;">Data extraction from RCTs for systematic review <span class="citation" data-cites="gartlehner2024">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Gartlehner et al.</span> 2024</a>)</span></td>
 <td style="text-align: left;">96.3% accuracy over 160 data elements from 10 papers</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>Dialogue / history-taking</strong></td>
-<td style="text-align: left;">Conversational AMIE <span class="citation" data-cites="tu2025">(<a href="#/references" role="doc-biblioref" onclick="">Tu et al. 2025</a>)</span></td>
+<td style="text-align: left;">Conversational AMIE <span class="citation" data-cites="tu2025">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Tu et al.</span> 2025</a>)</span></td>
 <td style="text-align: left;">Higher diagnostic accuracy than primary care physicians in text-based consultations</td>
 </tr>
 </tbody>
@@ -597,8 +613,8 @@ Dr.&nbsp;Wan Nor Arifin
 <div class="columns">
 <div class="column" style="width:50%;">
 <ul>
-<li>RCT of 70 clinicians: AI as <strong>first</strong> or <strong>second opinion</strong> improved diagnostic accuracy (85% and 82% <em>vs</em> 75% with conventional resources) – complementary role of AI <span class="citation" data-cites="everett2026">(<a href="#/references" role="doc-biblioref" onclick="">Everett et al. 2026</a>)</span></li>
-<li>Just giving clinicians a chatbot was not enough – emphasis on AI as assistant <span class="citation" data-cites="goh2024">(<a href="#/references" role="doc-biblioref" onclick="">Goh et al. 2024</a>)</span></li>
+<li>RCT of 70 clinicians: AI as <strong>first</strong> or <strong>second opinion</strong> improved diagnostic accuracy (85% and 82% <em>vs</em> 75% with conventional resources) – complementary role of AI <span class="citation" data-cites="everett2026">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Everett et al.</span> 2026</a>)</span></li>
+<li>Just giving clinicians a chatbot was not enough – emphasis on AI as assistant <span class="citation" data-cites="goh2024">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Goh et al.</span> 2024</a>)</span></li>
 </ul>
 </div><div class="column" style="width:50%;">
 <div class="big-quote">
@@ -632,7 +648,7 @@ Dr.&nbsp;Wan Nor Arifin
 <ul>
 <li><svg aria-hidden="true" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#C0392B;overflow:visible;position:relative;"><path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"></path></svg> <strong>Privacy</strong>: patient data sent to cloud providers</li>
 <li><svg aria-hidden="true" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#C0392B;overflow:visible;position:relative;"><path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"></path></svg> <strong>Changing models</strong>: behaviour shifts between versions, opaque training data <span class="citation" data-cites="iozzia2026">(<a href="#/references" role="doc-biblioref" onclick="">Iozzia 2026</a>)</span></li>
-<li><svg aria-hidden="true" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#C0392B;overflow:visible;position:relative;"><path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"></path></svg> <strong>Evaluation gap</strong>: few studies on real patient data <span class="citation" data-cites="bedi2025">(<a href="#/references" role="doc-biblioref" onclick="">Bedi et al. 2025</a>)</span></li>
+<li><svg aria-hidden="true" role="img" viewbox="0 0 512 512" style="height:1em;width:1em;vertical-align:-0.125em;margin-left:auto;margin-right:auto;font-size:inherit;fill:#C0392B;overflow:visible;position:relative;"><path d="M256 32c14.2 0 27.3 7.5 34.5 19.8l216 368c7.3 12.4 7.3 27.7 .2 40.1S486.3 480 472 480H40c-14.3 0-27.6-7.7-34.7-20.1s-7-27.8 .2-40.1l216-368C228.7 39.5 241.8 32 256 32zm0 128c-13.3 0-24 10.7-24 24V296c0 13.3 10.7 24 24 24s24-10.7 24-24V184c0-13.3-10.7-24-24-24zm32 224a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"></path></svg> <strong>Evaluation gap</strong>: few studies on real patient data <span class="citation" data-cites="bedi2025">(<a href="#/references" role="doc-biblioref" onclick=""><span class="nocase">Bedi et al.</span> 2025</a>)</span></li>
 </ul>
 </div></div>
 <div class="big-quote">
@@ -738,7 +754,7 @@ Dr.&nbsp;Wan Nor Arifin
 </div>
 <div class="card c-red">
 <p><span class="card-title">5. Simple apps</span></p>
-<p>Shiny + chat UI for patient education or data Q&amp;A in a few lines <span class="citation" data-cites="shinychat">(<a href="#/references" role="doc-biblioref" onclick="">Cheng, Sievert, and Aden-Buie 2026</a>)</span></p>
+<p>Shiny + chat UI for patient education or data Q&amp;A in a few lines <span class="citation" data-cites="shinychat">(<a href="#/references" role="doc-biblioref" onclick="">Cheng et al. 2026</a>)</span></p>
 </div>
 <div class="card c-red">
 <p><span class="card-title">6. Reproducible reporting</span></p>
@@ -807,11 +823,11 @@ Dr.&nbsp;Wan Nor Arifin
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>Apps</strong></td>
-<td style="text-align: left;"><code>shinychat</code> <span class="citation" data-cites="shinychat">(<a href="#/references" role="doc-biblioref" onclick="">Cheng, Sievert, and Aden-Buie 2026</a>)</span>, <code>querychat</code> (natural language → SQL over data)</td>
+<td style="text-align: left;"><code>shinychat</code> <span class="citation" data-cites="shinychat">(<a href="#/references" role="doc-biblioref" onclick="">Cheng et al. 2026</a>)</span>, <code>querychat</code> (natural language → SQL over data)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>Coding assistants</strong></td>
-<td style="text-align: left;"><code>btw</code> <span class="citation" data-cites="btw">(<a href="#/references" role="doc-biblioref" onclick="">Aden-Buie, Couch, and Cheng 2026</a>)</span>, <code>gander</code> <span class="citation" data-cites="gander">(<a href="#/references" role="doc-biblioref" onclick="">Couch 2025b</a>)</span>, <code>chores</code> <span class="citation" data-cites="chores">(<a href="#/references" role="doc-biblioref" onclick="">Couch 2025a</a>)</span>, <code>chattr</code> <span class="citation" data-cites="chattr">(<a href="#/references" role="doc-biblioref" onclick="">Ruiz 2025a</a>)</span>, <code>gptstudio</code> <span class="citation" data-cites="gptstudio">(<a href="#/references" role="doc-biblioref" onclick="">Nivard, Wade, and Calderon 2025</a>)</span></td>
+<td style="text-align: left;"><code>btw</code> <span class="citation" data-cites="btw">(<a href="#/references" role="doc-biblioref" onclick="">Aden-Buie et al. 2026</a>)</span>, <code>gander</code> <span class="citation" data-cites="gander">(<a href="#/references" role="doc-biblioref" onclick="">Couch 2025b</a>)</span>, <code>chores</code> <span class="citation" data-cites="chores">(<a href="#/references" role="doc-biblioref" onclick="">Couch 2025a</a>)</span>, <code>chattr</code> <span class="citation" data-cites="chattr">(<a href="#/references" role="doc-biblioref" onclick="">Ruiz 2025a</a>)</span>, <code>gptstudio</code> <span class="citation" data-cites="gptstudio">(<a href="#/references" role="doc-biblioref" onclick="">Nivard et al. 2025</a>)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>Model Context Protocol</strong></td>
@@ -1074,7 +1090,7 @@ Dr.&nbsp;Wan Nor Arifin
 </section>
 <section class="slide level2 scrollable smaller" id="references">
 <h2>References</h2>
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-abramoff2018" class="csl-entry" role="listitem">
 Abràmoff, Michael D, Philip T Lavin, Michele Birch, Nilay Shah, and James C Folk. 2018. <span>“<span class="nocase">Pivotal trial of an autonomous AI-based diagnostic system for detection of diabetic retinopathy in primary care offices</span>.”</span> <em>NPJ Digit Med</em> 1: 39. <a href="https://doi.org/10.1038/s41746-018-0040-6">https://doi.org/10.1038/s41746-018-0040-6</a>.
 </div>
@@ -1082,25 +1098,25 @@ Abràmoff, Michael D, Philip T Lavin, Michele Birch, Nilay Shah, and James C Fol
 Aden-Buie, Garrick, Simon Couch, and Joe Cheng. 2026. <em>Btw: A Toolkit for Connecting <span>R</span> and Large Language Models</em>. <a href="https://posit-dev.github.io/btw/">https://posit-dev.github.io/btw/</a>.
 </div>
 <div id="ref-afshar2025" class="csl-entry" role="listitem">
-Afshar, Majid, Mary Ryan Baumann, Felice Resnik, Josie Hintzke, Anne Gravel Sullivan, et al. 2025. <span>“<span class="nocase">A Pragmatic Randomized Controlled Trial of Ambient Artificial Intelligence to Improve Health Practitioner Well-Being</span>.”</span> <em>NEJM AI</em> 2 (12). <a href="https://doi.org/10.1056/aioa2500945">https://doi.org/10.1056/aioa2500945</a>.
+<span class="nocase">Afshar, Majid, Mary Ryan Baumann, Felice Resnik, Josie Hintzke, Anne Gravel Sullivan, et al.</span> 2025. <span>“<span class="nocase">A Pragmatic Randomized Controlled Trial of Ambient Artificial Intelligence to Improve Health Practitioner Well-Being</span>.”</span> <em>NEJM AI</em> 2 (12). <a href="https://doi.org/10.1056/aioa2500945">https://doi.org/10.1056/aioa2500945</a>.
 </div>
 <div id="ref-arifin2026book" class="csl-entry" role="listitem">
-Arifin, Wan Nor. 2026a. <span>“Exploring Large Language Models with <span>R</span>.”</span> <a href="https://wnarifin.github.io/explore_llm_with_r/">https://wnarifin.github.io/explore_llm_with_r/</a>.
+Arifin, Wan Nor. 2026a. <em>Exploring Large Language Models with <span>R</span></em>. <a href="https://wnarifin.github.io/explore_llm_with_r/">https://wnarifin.github.io/explore_llm_with_r/</a>.
 </div>
 <div id="ref-arifin2026workshop" class="csl-entry" role="listitem">
-———. 2026b. <span>“Structuring Clinical Notes into Analyzable Data with <span>R</span> and <span>LLMs</span>.”</span> <a href="https://wnarifin.github.io/workshop.html">https://wnarifin.github.io/workshop.html</a>.
+Arifin, Wan Nor. 2026b. <em>Structuring Clinical Notes into Analyzable Data with <span>R</span> and <span>LLMs</span></em>. <a href="https://wnarifin.github.io/workshop.html">https://wnarifin.github.io/workshop.html</a>.
 </div>
 <div id="ref-ayers2023" class="csl-entry" role="listitem">
-Ayers, John W, Adam Poliak, Mark Dredze, Eric C Leas, Zechariah Zhu, Jessica B Kelley, Dennis J Faix, et al. 2023. <span>“<span class="nocase">Comparing Physician and Artificial Intelligence Chatbot Responses to Patient Questions Posted to a Public Social Media Forum</span>.”</span> <em>JAMA Intern Med</em> 183 (6): 589–96. <a href="https://doi.org/10.1001/jamainternmed.2023.1838">https://doi.org/10.1001/jamainternmed.2023.1838</a>.
+<span class="nocase">Ayers, John W, Adam Poliak, Mark Dredze, et al.</span> 2023. <span>“<span class="nocase">Comparing Physician and Artificial Intelligence Chatbot Responses to Patient Questions Posted to a Public Social Media Forum</span>.”</span> <em>JAMA Intern Med</em> 183 (6): 589–96. <a href="https://doi.org/10.1001/jamainternmed.2023.1838">https://doi.org/10.1001/jamainternmed.2023.1838</a>.
 </div>
 <div id="ref-bates1998" class="csl-entry" role="listitem">
-Bates, D W, L L Leape, D J Cullen, N Laird, L A Petersen, J M Teich, E Burdick, et al. 1998. <span>“<span class="nocase">Effect of computerized physician order entry and a team intervention on prevention of serious medication errors</span>.”</span> <em>JAMA</em> 280 (15): 1311–16. <a href="https://doi.org/10.1001/jama.280.15.1311">https://doi.org/10.1001/jama.280.15.1311</a>.
+<span class="nocase">Bates, D W, L L Leape, D J Cullen, et al.</span> 1998. <span>“<span class="nocase">Effect of computerized physician order entry and a team intervention on prevention of serious medication errors</span>.”</span> <em>JAMA</em> 280 (15): 1311–16. <a href="https://doi.org/10.1001/jama.280.15.1311">https://doi.org/10.1001/jama.280.15.1311</a>.
 </div>
 <div id="ref-bedi2025" class="csl-entry" role="listitem">
-Bedi, Suhana, Yutong Liu, Lucy Orr-Ewing, Dev Dash, Sanmi Koyejo, Alison Callahan, Jason A Fries, et al. 2025. <span>“<span class="nocase">Testing and Evaluation of Health Care Applications of Large Language Models: A Systematic Review</span>.”</span> <em>JAMA</em> 333 (4): 319–28. <a href="https://doi.org/10.1001/jama.2024.21700">https://doi.org/10.1001/jama.2024.21700</a>.
+<span class="nocase">Bedi, Suhana, Yutong Liu, Lucy Orr-Ewing, et al.</span> 2025. <span>“<span class="nocase">Testing and Evaluation of Health Care Applications of Large Language Models: A Systematic Review</span>.”</span> <em>JAMA</em> 333 (4): 319–28. <a href="https://doi.org/10.1001/jama.2024.21700">https://doi.org/10.1001/jama.2024.21700</a>.
 </div>
 <div id="ref-brown2020" class="csl-entry" role="listitem">
-Brown, Tom B., Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared Kaplan, Prafulla Dhariwal, et al. 2020. <span>“Language Models Are Few-Shot Learners.”</span> In <em>Advances in Neural Information Processing Systems 33 (NeurIPS 2020)</em>. <a href="https://arxiv.org/abs/2005.14165">https://arxiv.org/abs/2005.14165</a>.
+<span class="nocase">Brown, Tom B., Benjamin Mann, Nick Ryder, et al.</span> 2020. <span>“Language Models Are Few-Shot Learners.”</span> <em>Advances in Neural Information Processing Systems 33 (NeurIPS 2020)</em>. <a href="https://arxiv.org/abs/2005.14165">https://arxiv.org/abs/2005.14165</a>.
 </div>
 <div id="ref-tidyllm" class="csl-entry" role="listitem">
 Brüll, Eduard. 2026. <em>Tidyllm: Tidy Integration of Large Language Models</em>. <a href="https://edubruell.github.io/tidyllm/">https://edubruell.github.io/tidyllm/</a>.
@@ -1112,64 +1128,64 @@ Cheng, Joe, Carson Sievert, and Garrick Aden-Buie. 2026. <em>Shinychat: Chat <sp
 Couch, Simon. 2025a. <em>Chores: A Collection of Large Language Model Assistants</em>. <a href="https://simonpcouch.github.io/chores/">https://simonpcouch.github.io/chores/</a>.
 </div>
 <div id="ref-gander" class="csl-entry" role="listitem">
-———. 2025b. <em>Gander: High Performance, Low Friction Large Language Model Chat</em>. <a href="https://simonpcouch.github.io/gander/">https://simonpcouch.github.io/gander/</a>.
+Couch, Simon. 2025b. <em>Gander: High Performance, Low Friction Large Language Model Chat</em>. <a href="https://simonpcouch.github.io/gander/">https://simonpcouch.github.io/gander/</a>.
 </div>
 <div id="ref-mcptools" class="csl-entry" role="listitem">
-———. 2025c. <em>Mcptools: Model Context Protocol for <span>R</span></em>. <a href="https://posit-dev.github.io/mcptools/">https://posit-dev.github.io/mcptools/</a>.
+Couch, Simon. 2025c. <em>Mcptools: Model Context Protocol for <span>R</span></em>. <a href="https://posit-dev.github.io/mcptools/">https://posit-dev.github.io/mcptools/</a>.
 </div>
 <div id="ref-vitals" class="csl-entry" role="listitem">
-———. 2025d. <em>Vitals: Large Language Model Evaluation</em>. <a href="https://vitals.tidyverse.org">https://vitals.tidyverse.org</a>.
+Couch, Simon. 2025d. <em>Vitals: Large Language Model Evaluation</em>. <a href="https://vitals.tidyverse.org">https://vitals.tidyverse.org</a>.
 </div>
 <div id="ref-dedombal1972" class="csl-entry" role="listitem">
-de Dombal, F T, D J Leaper, J R Staniland, A P McCann, and J C Horrocks. 1972. <span>“<span class="nocase">Computer-aided diagnosis of acute abdominal pain</span>.”</span> <em>Br Med J</em> 2 (5804): 9–13. <a href="https://doi.org/10.1136/bmj.2.5804.9">https://doi.org/10.1136/bmj.2.5804.9</a>.
+<span class="nocase">de Dombal, F T, D J Leaper, J R Staniland, A P McCann, and J C Horrocks</span>. 1972. <span>“<span class="nocase">Computer-aided diagnosis of acute abdominal pain</span>.”</span> <em>Br Med J</em> 2 (5804): 9–13. <a href="https://doi.org/10.1136/bmj.2.5804.9">https://doi.org/10.1136/bmj.2.5804.9</a>.
 </div>
 <div id="ref-devlin2019" class="csl-entry" role="listitem">
-Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2019. <span>“<span>BERT</span>: Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> In <em>Proceedings of NAACL-HLT 2019</em>, 4171–86. <a href="https://arxiv.org/abs/1810.04805">https://arxiv.org/abs/1810.04805</a>.
+Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2019. <span>“<span>BERT</span>: Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>Proceedings of NAACL-HLT 2019</em>, 4171–86. <a href="https://arxiv.org/abs/1810.04805">https://arxiv.org/abs/1810.04805</a>.
 </div>
 <div id="ref-doi2007" class="csl-entry" role="listitem">
 Doi, Kunio. 2007. <span>“<span class="nocase">Computer-aided diagnosis in medical imaging: historical review, current status and future potential</span>.”</span> <em>Comput Med Imaging Graph</em> 31 (4-5): 198–211. <a href="https://doi.org/10.1016/j.compmedimag.2007.02.002">https://doi.org/10.1016/j.compmedimag.2007.02.002</a>.
 </div>
 <div id="ref-esteva2017" class="csl-entry" role="listitem">
-Esteva, Andre, Brett Kuprel, Roberto A Novoa, Justin Ko, Susan M Swetter, Helen M Blau, and Sebastian Thrun. 2017. <span>“<span class="nocase">Dermatologist-level classification of skin cancer with deep neural networks</span>.”</span> <em>Nature</em> 542 (7639): 115–18. <a href="https://doi.org/10.1038/nature21056">https://doi.org/10.1038/nature21056</a>.
+Esteva, Andre, Brett Kuprel, Roberto A Novoa, et al. 2017. <span>“<span class="nocase">Dermatologist-level classification of skin cancer with deep neural networks</span>.”</span> <em>Nature</em> 542 (7639): 115–18. <a href="https://doi.org/10.1038/nature21056">https://doi.org/10.1038/nature21056</a>.
 </div>
 <div id="ref-everett2026" class="csl-entry" role="listitem">
-Everett, Selin S, Bryan J Bunning, Priyank Jain, Ivan Lopez, et al. 2026. <span>“<span class="nocase">From tool to teammate in a randomized controlled trial of clinician-AI collaborative workflows for diagnosis</span>.”</span> <em>NPJ Digit Med</em> 9 (1). <a href="https://doi.org/10.1038/s41746-026-02545-1">https://doi.org/10.1038/s41746-026-02545-1</a>.
+<span class="nocase">Everett, Selin S, Bryan J Bunning, Priyank Jain, Ivan Lopez, et al.</span> 2026. <span>“<span class="nocase">From tool to teammate in a randomized controlled trial of clinician-AI collaborative workflows for diagnosis</span>.”</span> <em>NPJ Digit Med</em> 9 (1). <a href="https://doi.org/10.1038/s41746-026-02545-1">https://doi.org/10.1038/s41746-026-02545-1</a>.
 </div>
 <div id="ref-fenton2007" class="csl-entry" role="listitem">
-Fenton, Joshua J, Stephen H Taplin, Patricia A Carney, Linn Abraham, Edward A Sickles, Carl D’Orsi, Eric A Berns, et al. 2007. <span>“<span class="nocase">Influence of computer-aided detection on performance of screening mammography</span>.”</span> <em>N Engl J Med</em> 356 (14): 1399–409. <a href="https://doi.org/10.1056/NEJMoa066099">https://doi.org/10.1056/NEJMoa066099</a>.
+<span class="nocase">Fenton, Joshua J, Stephen H Taplin, Patricia A Carney, et al.</span> 2007. <span>“<span class="nocase">Influence of computer-aided detection on performance of screening mammography</span>.”</span> <em>N Engl J Med</em> 356 (14): 1399–409. <a href="https://doi.org/10.1056/NEJMoa066099">https://doi.org/10.1056/NEJMoa066099</a>.
 </div>
 <div id="ref-gartlehner2024" class="csl-entry" role="listitem">
-Gartlehner, Gerald, Leila Kahwati, Rainer Hilscher, Ian Thomas, Shannon Kugley, Karen Crotty, Meera Viswanathan, et al. 2024. <span>“<span class="nocase">Data extraction for evidence synthesis using a large language model: A proof-of-concept study</span>.”</span> <em>Res Synth Methods</em> 15 (4): 576–89. <a href="https://doi.org/10.1002/jrsm.1710">https://doi.org/10.1002/jrsm.1710</a>.
+<span class="nocase">Gartlehner, Gerald, Leila Kahwati, Rainer Hilscher, et al.</span> 2024. <span>“<span class="nocase">Data extraction for evidence synthesis using a large language model: A proof-of-concept study</span>.”</span> <em>Res Synth Methods</em> 15 (4): 576–89. <a href="https://doi.org/10.1002/jrsm.1710">https://doi.org/10.1002/jrsm.1710</a>.
 </div>
 <div id="ref-octoverse2024" class="csl-entry" role="listitem">
-GitHub. 2024. <span>“Octoverse: <span>AI</span> Leads <span>Python</span> to Top Language as the Number of Global Developers Surges.”</span> <a href="https://github.blog/news-insights/octoverse/octoverse-2024/">https://github.blog/news-insights/octoverse/octoverse-2024/</a>.
+GitHub. 2024. <em>Octoverse: <span>AI</span> Leads <span>Python</span> to Top Language as the Number of Global Developers Surges</em>. <a href="https://github.blog/news-insights/octoverse/octoverse-2024/">https://github.blog/news-insights/octoverse/octoverse-2024/</a>.
 </div>
 <div id="ref-goh2024" class="csl-entry" role="listitem">
-Goh, Ethan, Robert Gallo, Jason Hom, Eric Strong, Yingjie Weng, Hannah Kerman, Joséphine A Cool, et al. 2024. <span>“<span class="nocase">Large Language Model Influence on Diagnostic Reasoning: A Randomized Clinical Trial</span>.”</span> <em>JAMA Netw Open</em> 7 (10): e2440969. <a href="https://doi.org/10.1001/jamanetworkopen.2024.40969">https://doi.org/10.1001/jamanetworkopen.2024.40969</a>.
+<span class="nocase">Goh, Ethan, Robert Gallo, Jason Hom, et al.</span> 2024. <span>“<span class="nocase">Large Language Model Influence on Diagnostic Reasoning: A Randomized Clinical Trial</span>.”</span> <em>JAMA Netw Open</em> 7 (10): e2440969. <a href="https://doi.org/10.1001/jamanetworkopen.2024.40969">https://doi.org/10.1001/jamanetworkopen.2024.40969</a>.
 </div>
 <div id="ref-medgemma15" class="csl-entry" role="listitem">
-Google Research and Google DeepMind. 2026. <span>“<span>MedGemma</span> 1.5 Technical Report.”</span> <a href="https://arxiv.org/abs/2604.05081">https://arxiv.org/abs/2604.05081</a>.
+Google Research and Google DeepMind. 2026. <em><span>MedGemma</span> 1.5 Technical Report</em>. <a href="https://arxiv.org/abs/2604.05081">https://arxiv.org/abs/2604.05081</a>.
 </div>
 <div id="ref-rollama" class="csl-entry" role="listitem">
 Gruber, Johannes B., and Maximilian Weber. 2025. <em>Rollama: Communicate with Ollama to Run Large Language Models Locally</em>. <a href="https://jbgruber.github.io/rollama/">https://jbgruber.github.io/rollama/</a>.
 </div>
 <div id="ref-gulshan2016" class="csl-entry" role="listitem">
-Gulshan, Varun, Lily Peng, Marc Coram, Martin C Stumpe, Derek Wu, Arunachalam Narayanaswamy, Subhashini Venugopalan, et al. 2016. <span>“<span class="nocase">Development and Validation of a Deep Learning Algorithm for Detection of Diabetic Retinopathy in Retinal Fundus Photographs</span>.”</span> <em>JAMA</em> 316 (22): 2402–10. <a href="https://doi.org/10.1001/jama.2016.17216">https://doi.org/10.1001/jama.2016.17216</a>.
+<span class="nocase">Gulshan, Varun, Lily Peng, Marc Coram, et al.</span> 2016. <span>“<span class="nocase">Development and Validation of a Deep Learning Algorithm for Detection of Diabetic Retinopathy in Retinal Fundus Photographs</span>.”</span> <em>JAMA</em> 316 (22): 2402–10. <a href="https://doi.org/10.1001/jama.2016.17216">https://doi.org/10.1001/jama.2016.17216</a>.
 </div>
 <div id="ref-guo2025" class="csl-entry" role="listitem">
-Guo, Daya, Dejian Yang, Haowei Zhang, Junxiao Song, Peiyi Wang, Qihao Zhu, Runxin Xu, et al. 2025. <span>“<span class="nocase">DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning</span>.”</span> <em>Nature</em> 645 (8081): 633–38. <a href="https://doi.org/10.1038/s41586-025-09422-z">https://doi.org/10.1038/s41586-025-09422-z</a>.
+<span class="nocase">Guo, Daya, Dejian Yang, Haowei Zhang, et al.</span> 2025. <span>“<span class="nocase">DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning</span>.”</span> <em>Nature</em> 645 (8081): 633–38. <a href="https://doi.org/10.1038/s41586-025-09422-z">https://doi.org/10.1038/s41586-025-09422-z</a>.
 </div>
 <div id="ref-huang2024" class="csl-entry" role="listitem">
-Huang, Jingwei, Donghan M Yang, Ruichen Rong, Kuroush Nezafati, Colin Treager, et al. 2024. <span>“<span class="nocase">A critical assessment of using ChatGPT for extracting structured data from clinical notes</span>.”</span> <em>NPJ Digit Med</em> 7 (1): 106. <a href="https://doi.org/10.1038/s41746-024-01079-8">https://doi.org/10.1038/s41746-024-01079-8</a>.
+<span class="nocase">Huang, Jingwei, Donghan M Yang, Ruichen Rong, Kuroush Nezafati, Colin Treager, et al.</span> 2024. <span>“<span class="nocase">A critical assessment of using ChatGPT for extracting structured data from clinical notes</span>.”</span> <em>NPJ Digit Med</em> 7 (1): 106. <a href="https://doi.org/10.1038/s41746-024-01079-8">https://doi.org/10.1038/s41746-024-01079-8</a>.
 </div>
 <div id="ref-kuzco" class="csl-entry" role="listitem">
 Hull, Frank. 2025. <em>Kuzco: Computer Vision with Large Language Models</em>. <a href="https://frankiethull.github.io/kuzco/">https://frankiethull.github.io/kuzco/</a>.
 </div>
 <div id="ref-iozzia2026" class="csl-entry" role="listitem">
-Iozzia, Guglielmo. 2026. <span>“Domain-Specific Small Language Models: Efficient <span>AI</span> for Local Deployment.”</span> Manning.
+Iozzia, Guglielmo. 2026. <em>Domain-Specific Small Language Models: Efficient <span>AI</span> for Local Deployment</em>. Manning.
 </div>
 <div id="ref-jumper2021" class="csl-entry" role="listitem">
-Jumper, John, Richard Evans, Alexander Pritzel, Tim Green, Michael Figurnov, Olaf Ronneberger, Kathryn Tunyasuvunakool, et al. 2021. <span>“<span class="nocase">Highly accurate protein structure prediction with AlphaFold</span>.”</span> <em>Nature</em> 596 (7873): 583–89. <a href="https://doi.org/10.1038/s41586-021-03819-2">https://doi.org/10.1038/s41586-021-03819-2</a>.
+<span class="nocase">Jumper, John, Richard Evans, Alexander Pritzel, et al.</span> 2021. <span>“<span class="nocase">Highly accurate protein structure prediction with AlphaFold</span>.”</span> <em>Nature</em> 596 (7873): 583–89. <a href="https://doi.org/10.1038/s41586-021-03819-2">https://doi.org/10.1038/s41586-021-03819-2</a>.
 </div>
 <div id="ref-ragnar" class="csl-entry" role="listitem">
 Kalinowski, Tomasz, and Daniel Falbel. 2026. <em>Ragnar: Retrieval-Augmented Generation (<span>RAG</span>) Workflows</em>. <a href="https://ragnar.tidyverse.org">https://ragnar.tidyverse.org</a>.
@@ -1178,7 +1194,7 @@ Kalinowski, Tomasz, and Daniel Falbel. 2026. <em>Ragnar: Retrieval-Augmented Gen
 Kawamoto, Kensaku, Caitlin A Houlihan, E Andrew Balas, and David F Lobach. 2005. <span>“<span class="nocase">Improving clinical practice using clinical decision support systems: a systematic review of trials to identify features critical to success</span>.”</span> <em>BMJ</em> 330 (7494): 765. <a href="https://doi.org/10.1136/bmj.38398.500764.8F">https://doi.org/10.1136/bmj.38398.500764.8F</a>.
 </div>
 <div id="ref-kung2023" class="csl-entry" role="listitem">
-Kung, Tiffany H, Morgan Cheatham, Arielle Medenilla, Czarina Sillos, Lorie De Leon, Camille Elepaño, Maria Madriaga, et al. 2023. <span>“<span class="nocase">Performance of ChatGPT on USMLE: Potential for AI-assisted medical education using large language models</span>.”</span> <em>PLOS Digit Health</em> 2 (2): e0000198. <a href="https://doi.org/10.1371/journal.pdig.0000198">https://doi.org/10.1371/journal.pdig.0000198</a>.
+<span class="nocase">Kung, Tiffany H, Morgan Cheatham, Arielle Medenilla, et al.</span> 2023. <span>“<span class="nocase">Performance of ChatGPT on USMLE: Potential for AI-assisted medical education using large language models</span>.”</span> <em>PLOS Digit Health</em> 2 (2): e0000198. <a href="https://doi.org/10.1371/journal.pdig.0000198">https://doi.org/10.1371/journal.pdig.0000198</a>.
 </div>
 <div id="ref-ledley1959" class="csl-entry" role="listitem">
 Ledley, R S, and L B Lusted. 1959. <span>“<span class="nocase">Reasoning foundations of medical diagnosis; symbolic logic, probability, and value theory aid our understanding of how physicians reason</span>.”</span> <em>Science</em> 130 (3366): 9–21. <a href="https://doi.org/10.1126/science.130.3366.9">https://doi.org/10.1126/science.130.3366.9</a>.
@@ -1187,16 +1203,16 @@ Ledley, R S, and L B Lusted. 1959. <span>“<span class="nocase">Reasoning found
 Lin, Hause, and Tawab Safi. 2025. <em>Ollamar: Ollama Language Models</em>. <a href="https://hauselin.github.io/ollama-r/">https://hauselin.github.io/ollama-r/</a>.
 </div>
 <div id="ref-lukac2025" class="csl-entry" role="listitem">
-Lukac, Paul J, William Turner, Sitaram Vangala, Aaron T Chin, Joshua Khalili, Ya-Chen Tina Shih, Catherine Sarkisian, Eric M Cheng, and John N Mafi. 2025. <span>“<span class="nocase">Ambient AI Scribes in Clinical Practice: A Randomized Trial</span>.”</span> <em>NEJM AI</em> 2 (12). <a href="https://doi.org/10.1056/aioa2501000">https://doi.org/10.1056/aioa2501000</a>.
+Lukac, Paul J, William Turner, Sitaram Vangala, et al. 2025. <span>“<span class="nocase">Ambient AI Scribes in Clinical Practice: A Randomized Trial</span>.”</span> <em>NEJM AI</em> 2 (12). <a href="https://doi.org/10.1056/aioa2501000">https://doi.org/10.1056/aioa2501000</a>.
 </div>
 <div id="ref-mcduff2025" class="csl-entry" role="listitem">
-McDuff, Daniel, Mike Schaekermann, Tao Tu, Anil Palepu, Amy Wang, Jake Garrison, Karan Singhal, et al. 2025. <span>“<span class="nocase">Towards accurate differential diagnosis with large language models</span>.”</span> <em>Nature</em> 642 (8067): 451–57. <a href="https://doi.org/10.1038/s41586-025-08869-4">https://doi.org/10.1038/s41586-025-08869-4</a>.
+<span class="nocase">McDuff, Daniel, Mike Schaekermann, Tao Tu, et al.</span> 2025. <span>“<span class="nocase">Towards accurate differential diagnosis with large language models</span>.”</span> <em>Nature</em> 642 (8067): 451–57. <a href="https://doi.org/10.1038/s41586-025-08869-4">https://doi.org/10.1038/s41586-025-08869-4</a>.
 </div>
 <div id="ref-mckinney2020" class="csl-entry" role="listitem">
-McKinney, Scott Mayer, Marcin Sieniek, Varun Godbole, Jonathan Godwin, Natasha Antropova, Hutan Ashrafian, Trevor Back, et al. 2020. <span>“<span class="nocase">International evaluation of an AI system for breast cancer screening</span>.”</span> <em>Nature</em> 577 (7788): 89–94. <a href="https://doi.org/10.1038/s41586-019-1799-6">https://doi.org/10.1038/s41586-019-1799-6</a>.
+<span class="nocase">McKinney, Scott Mayer, Marcin Sieniek, Varun Godbole, et al.</span> 2020. <span>“<span class="nocase">International evaluation of an AI system for breast cancer screening</span>.”</span> <em>Nature</em> 577 (7788): 89–94. <a href="https://doi.org/10.1038/s41586-019-1799-6">https://doi.org/10.1038/s41586-019-1799-6</a>.
 </div>
 <div id="ref-mei2020" class="csl-entry" role="listitem">
-Mei, Xueyan, Hao-Chih Lee, Kai-Yue Diao, Mingqian Huang, Bin Lin, et al. 2020. <span>“<span class="nocase">Artificial intelligence-enabled rapid diagnosis of patients with COVID-19</span>.”</span> <em>Nat Med</em> 26 (8): 1224–28. <a href="https://doi.org/10.1038/s41591-020-0931-3">https://doi.org/10.1038/s41591-020-0931-3</a>.
+<span class="nocase">Mei, Xueyan, Hao-Chih Lee, Kai-Yue Diao, Mingqian Huang, Bin Lin, et al.</span> 2020. <span>“<span class="nocase">Artificial intelligence-enabled rapid diagnosis of patients with COVID-19</span>.”</span> <em>Nat Med</em> 26 (8): 1224–28. <a href="https://doi.org/10.1038/s41591-020-0931-3">https://doi.org/10.1038/s41591-020-0931-3</a>.
 </div>
 <div id="ref-miller1982" class="csl-entry" role="listitem">
 Miller, R A, H E Pople, and J D Myers. 1982. <span>“<span class="nocase">Internist-1, an experimental computer-based diagnostic consultant for general internal medicine</span>.”</span> <em>N Engl J Med</em> 307 (8): 468–76. <a href="https://doi.org/10.1056/NEJM198208193070803">https://doi.org/10.1056/NEJM198208193070803</a>.
@@ -1205,52 +1221,52 @@ Miller, R A, H E Pople, and J D Myers. 1982. <span>“<span class="nocase">Inter
 Nivard, Michel, James Wade, and Samuel Calderon. 2025. <em>Gptstudio: Use Large Language Models Directly in Your Development Environment</em>. <a href="https://github.com/MichelNivard/gptstudio">https://github.com/MichelNivard/gptstudio</a>.
 </div>
 <div id="ref-osullivan2026" class="csl-entry" role="listitem">
-O’Sullivan, Jack W, Anil Palepu, Khaled Saab, Wei-Hung Weng, et al. 2026. <span>“<span class="nocase">A large language model for complex cardiology care</span>.”</span> <em>Nat Med</em> 32 (2): 616–23. <a href="https://doi.org/10.1038/s41591-025-04190-9">https://doi.org/10.1038/s41591-025-04190-9</a>.
+<span class="nocase">O’Sullivan, Jack W, Anil Palepu, Khaled Saab, Wei-Hung Weng, et al.</span> 2026. <span>“<span class="nocase">A large language model for complex cardiology care</span>.”</span> <em>Nat Med</em> 32 (2): 616–23. <a href="https://doi.org/10.1038/s41591-025-04190-9">https://doi.org/10.1038/s41591-025-04190-9</a>.
 </div>
 <div id="ref-omiye2023" class="csl-entry" role="listitem">
 Omiye, Jesutofunmi A, Jenna C Lester, Simon Spichak, Veronica Rotemberg, and Roxana Daneshjou. 2023. <span>“<span class="nocase">Large language models propagate race-based medicine</span>.”</span> <em>NPJ Digit Med</em> 6 (1): 195. <a href="https://doi.org/10.1038/s41746-023-00939-z">https://doi.org/10.1038/s41746-023-00939-z</a>.
 </div>
 <div id="ref-openai2022" class="csl-entry" role="listitem">
-OpenAI. 2022. <span>“Introducing <span>ChatGPT</span>.”</span> <a href="https://openai.com/index/chatgpt/">https://openai.com/index/chatgpt/</a>.
+OpenAI. 2022. <em>Introducing <span>ChatGPT</span></em>. <a href="https://openai.com/index/chatgpt/">https://openai.com/index/chatgpt/</a>.
 </div>
 <div id="ref-openai2023" class="csl-entry" role="listitem">
-———. 2023. <span>“<span>GPT-4</span> Technical Report.”</span> <a href="https://arxiv.org/abs/2303.08774">https://arxiv.org/abs/2303.08774</a>.
+OpenAI. 2023. <em><span>GPT-4</span> Technical Report</em>. <a href="https://arxiv.org/abs/2303.08774">https://arxiv.org/abs/2303.08774</a>.
 </div>
 <div id="ref-ouyang2022" class="csl-entry" role="listitem">
-Ouyang, Long, Jeff Wu, Xu Jiang, Diogo Almeida, Carroll L. Wainwright, Pamela Mishkin, et al. 2022. <span>“Training Language Models to Follow Instructions with Human Feedback.”</span> In <em>Advances in Neural Information Processing Systems 35 (NeurIPS 2022)</em>. <a href="https://arxiv.org/abs/2203.02155">https://arxiv.org/abs/2203.02155</a>.
+<span class="nocase">Ouyang, Long, Jeff Wu, Xu Jiang, et al.</span> 2022. <span>“Training Language Models to Follow Instructions with Human Feedback.”</span> <em>Advances in Neural Information Processing Systems 35 (NeurIPS 2022)</em>. <a href="https://arxiv.org/abs/2203.02155">https://arxiv.org/abs/2203.02155</a>.
 </div>
 <div id="ref-rconsortium2024" class="csl-entry" role="listitem">
-R Consortium. 2024. <span>“News from <span>R</span> Submissions Working Group – Pilot 3 Successfully Reviewed by <span>FDA</span>.”</span> <a href="https://r-consortium.org/posts/news-from-r-submissions-working-group-pilot-3/">https://r-consortium.org/posts/news-from-r-submissions-working-group-pilot-3/</a>.
+R Consortium. 2024. <em>News from <span>R</span> Submissions Working Group – Pilot 3 Successfully Reviewed by <span>FDA</span></em>. <a href="https://r-consortium.org/posts/news-from-r-submissions-working-group-pilot-3/">https://r-consortium.org/posts/news-from-r-submissions-working-group-pilot-3/</a>.
 </div>
 <div id="ref-radford2018" class="csl-entry" role="listitem">
-Radford, Alec, Karthik Narasimhan, Tim Salimans, and Ilya Sutskever. 2018. <span>“Improving Language Understanding by Generative Pre-Training.”</span> Technical report. OpenAI.
+Radford, Alec, Karthik Narasimhan, Tim Salimans, and Ilya Sutskever. 2018. <em>Improving Language Understanding by Generative Pre-Training</em>. Technical report. OpenAI.
 </div>
 <div id="ref-radford2019" class="csl-entry" role="listitem">
-Radford, Alec, Jeffrey Wu, Rewon Child, David Luan, Dario Amodei, and Ilya Sutskever. 2019. <span>“Language Models Are Unsupervised Multitask Learners.”</span> Technical report. OpenAI.
+Radford, Alec, Jeffrey Wu, Rewon Child, David Luan, Dario Amodei, and Ilya Sutskever. 2019. <em>Language Models Are Unsupervised Multitask Learners</em>. Technical report. OpenAI.
 </div>
 <div id="ref-rajpurkar2022" class="csl-entry" role="listitem">
 Rajpurkar, Pranav, Emma Chen, Oishi Banerjee, and Eric J Topol. 2022. <span>“<span class="nocase">AI in health and medicine</span>.”</span> <em>Nat Med</em> 28 (1): 31–38. <a href="https://doi.org/10.1038/s41591-021-01614-0">https://doi.org/10.1038/s41591-021-01614-0</a>.
 </div>
 <div id="ref-roberts2021" class="csl-entry" role="listitem">
-Roberts, Michael, Derek Driggs, Matthew Thorpe, Julian Gilbey, Michael Yeung, et al. 2021. <span>“<span class="nocase">Common pitfalls and recommendations for using machine learning to detect and prognosticate for COVID-19 using chest radiographs and CT scans</span>.”</span> <em>Nat Mach Intell</em> 3: 199–217. <a href="https://doi.org/10.1038/s42256-021-00307-0">https://doi.org/10.1038/s42256-021-00307-0</a>.
+<span class="nocase">Roberts, Michael, Derek Driggs, Matthew Thorpe, Julian Gilbey, Michael Yeung, et al.</span> 2021. <span>“<span class="nocase">Common pitfalls and recommendations for using machine learning to detect and prognosticate for COVID-19 using chest radiographs and CT scans</span>.”</span> <em>Nat Mach Intell</em> 3: 199–217. <a href="https://doi.org/10.1038/s42256-021-00307-0">https://doi.org/10.1038/s42256-021-00307-0</a>.
 </div>
 <div id="ref-chattr" class="csl-entry" role="listitem">
 Ruiz, Edgar. 2025a. <em>Chattr: Interact with Large Language Models in ’<span>RStudio</span>’</em>. <a href="https://mlverse.github.io/chattr/">https://mlverse.github.io/chattr/</a>.
 </div>
 <div id="ref-mall" class="csl-entry" role="listitem">
-———. 2025b. <em>Mall: Run Multiple Large Language Model Predictions Against a Table, or Vectors</em>. <a href="https://mlverse.github.io/mall/">https://mlverse.github.io/mall/</a>.
+Ruiz, Edgar. 2025b. <em>Mall: Run Multiple Large Language Model Predictions Against a Table, or Vectors</em>. <a href="https://mlverse.github.io/mall/">https://mlverse.github.io/mall/</a>.
 </div>
 <div id="ref-sellergren2025" class="csl-entry" role="listitem">
-Sellergren, Andrew, Sahar Kazemzadeh, Tiam Jaroensri, Atilla Kiraly, Madeleine Traverse, et al. 2025. <span>“<span>MedGemma</span> Technical Report.”</span> <a href="https://arxiv.org/abs/2507.05201">https://arxiv.org/abs/2507.05201</a>.
+<span class="nocase">Sellergren, Andrew, Sahar Kazemzadeh, Tiam Jaroensri, Atilla Kiraly, Madeleine Traverse, et al.</span> 2025. <em><span>MedGemma</span> Technical Report</em>. <a href="https://arxiv.org/abs/2507.05201">https://arxiv.org/abs/2507.05201</a>.
 </div>
 <div id="ref-shortliffe1976" class="csl-entry" role="listitem">
-Shortliffe, Edward H. 1976. <em>Computer-Based Medical Consultations: <span>MYCIN</span></em>. New York: Elsevier.
+Shortliffe, Edward H. 1976. <em>Computer-Based Medical Consultations: <span>MYCIN</span></em>. Elsevier.
 </div>
 <div id="ref-singhal2023" class="csl-entry" role="listitem">
-Singhal, Karan, Shekoofeh Azizi, Tao Tu, S Sara Mahdavi, Jason Wei, Hyung Won Chung, Nathan Scales, et al. 2023. <span>“<span class="nocase">Large language models encode clinical knowledge</span>.”</span> <em>Nature</em> 620 (7972): 172–80. <a href="https://doi.org/10.1038/s41586-023-06291-2">https://doi.org/10.1038/s41586-023-06291-2</a>.
+<span class="nocase">Singhal, Karan, Shekoofeh Azizi, Tao Tu, et al.</span> 2023. <span>“<span class="nocase">Large language models encode clinical knowledge</span>.”</span> <em>Nature</em> 620 (7972): 172–80. <a href="https://doi.org/10.1038/s41586-023-06291-2">https://doi.org/10.1038/s41586-023-06291-2</a>.
 </div>
 <div id="ref-singhal2025" class="csl-entry" role="listitem">
-Singhal, Karan, Tao Tu, Juraj Gottweis, Rory Sayres, Ellery Wulczyn, Mohamed Amin, Le Hou, et al. 2025. <span>“<span class="nocase">Toward expert-level medical question answering with large language models</span>.”</span> <em>Nat Med</em> 31 (3): 943–50. <a href="https://doi.org/10.1038/s41591-024-03423-7">https://doi.org/10.1038/s41591-024-03423-7</a>.
+<span class="nocase">Singhal, Karan, Tao Tu, Juraj Gottweis, et al.</span> 2025. <span>“<span class="nocase">Toward expert-level medical question answering with large language models</span>.”</span> <em>Nat Med</em> 31 (3): 943–50. <a href="https://doi.org/10.1038/s41591-024-03423-7">https://doi.org/10.1038/s41591-024-03423-7</a>.
 </div>
 <div id="ref-thirunavukarasu2023" class="csl-entry" role="listitem">
 Thirunavukarasu, Arun James, Darren Shu Jeng Ting, Kabilan Elangovan, Laura Gutierrez, Ting Fang Tan, and Daniel Shu Wei Ting. 2023. <span>“<span class="nocase">Large language models in medicine</span>.”</span> <em>Nat Med</em> 29 (8): 1930–40. <a href="https://doi.org/10.1038/s41591-023-02448-8">https://doi.org/10.1038/s41591-023-02448-8</a>.
@@ -1259,16 +1275,16 @@ Thirunavukarasu, Arun James, Darren Shu Jeng Ting, Kabilan Elangovan, Laura Guti
 Topol, Eric J. 2019. <span>“<span class="nocase">High-performance medicine: the convergence of human and artificial intelligence</span>.”</span> <em>Nat Med</em> 25 (1): 44–56. <a href="https://doi.org/10.1038/s41591-018-0300-7">https://doi.org/10.1038/s41591-018-0300-7</a>.
 </div>
 <div id="ref-touvron2023" class="csl-entry" role="listitem">
-Touvron, Hugo, Thibaut Lavril, Gautier Izacard, Xavier Martinet, Marie-Anne Lachaux, Timothée Lacroix, et al. 2023. <span>“<span>LLaMA</span>: Open and Efficient Foundation Language Models.”</span> <a href="https://arxiv.org/abs/2302.13971">https://arxiv.org/abs/2302.13971</a>.
+<span class="nocase">Touvron, Hugo, Thibaut Lavril, Gautier Izacard, et al.</span> 2023. <em><span>LLaMA</span>: Open and Efficient Foundation Language Models</em>. <a href="https://arxiv.org/abs/2302.13971">https://arxiv.org/abs/2302.13971</a>.
 </div>
 <div id="ref-tu2025" class="csl-entry" role="listitem">
-Tu, Tao, Mike Schaekermann, Anil Palepu, Khaled Saab, Jan Freyberg, Ryutaro Tanno, Amy Wang, et al. 2025. <span>“<span class="nocase">Towards conversational diagnostic artificial intelligence</span>.”</span> <em>Nature</em> 642 (8067): 442–50. <a href="https://doi.org/10.1038/s41586-025-08866-7">https://doi.org/10.1038/s41586-025-08866-7</a>.
+<span class="nocase">Tu, Tao, Mike Schaekermann, Anil Palepu, et al.</span> 2025. <span>“<span class="nocase">Towards conversational diagnostic artificial intelligence</span>.”</span> <em>Nature</em> 642 (8067): 442–50. <a href="https://doi.org/10.1038/s41586-025-08866-7">https://doi.org/10.1038/s41586-025-08866-7</a>.
 </div>
 <div id="ref-vanveen2024" class="csl-entry" role="listitem">
-Van Veen, Dave, Cara Van Uden, Louis Blankemeier, Jean-Benoit Delbrouck, Asad Aali, Christian Bluethgen, Anuj Pareek, et al. 2024. <span>“<span class="nocase">Adapted large language models can outperform medical experts in clinical text summarization</span>.”</span> <em>Nat Med</em> 30 (4): 1134–42. <a href="https://doi.org/10.1038/s41591-024-02855-5">https://doi.org/10.1038/s41591-024-02855-5</a>.
+<span class="nocase">Van Veen, Dave, Cara Van Uden, Louis Blankemeier, et al.</span> 2024. <span>“<span class="nocase">Adapted large language models can outperform medical experts in clinical text summarization</span>.”</span> <em>Nat Med</em> 30 (4): 1134–42. <a href="https://doi.org/10.1038/s41591-024-02855-5">https://doi.org/10.1038/s41591-024-02855-5</a>.
 </div>
 <div id="ref-vaswani2017" class="csl-entry" role="listitem">
-Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. <span>“Attention Is All You Need.”</span> In <em>Advances in Neural Information Processing Systems 30 (NeurIPS 2017)</em>. <a href="https://arxiv.org/abs/1706.03762">https://arxiv.org/abs/1706.03762</a>.
+Vaswani, Ashish, Noam Shazeer, Niki Parmar, et al. 2017. <span>“Attention Is All You Need.”</span> <em>Advances in Neural Information Processing Systems 30 (NeurIPS 2017)</em>. <a href="https://arxiv.org/abs/1706.03762">https://arxiv.org/abs/1706.03762</a>.
 </div>
 <div id="ref-wang2024" class="csl-entry" role="listitem">
 Wang, Dandan, and Shiqing Zhang. 2024. <span>“Large Language Models in Medical and Healthcare Fields: Applications, Advances, and Challenges.”</span> <em>Artificial Intelligence Review</em> 57 (11): 299. <a href="https://doi.org/10.1007/s10462-024-10921-0">https://doi.org/10.1007/s10462-024-10921-0</a>.
@@ -1277,20 +1293,21 @@ Wang, Dandan, and Shiqing Zhang. 2024. <span>“Large Language Models in Medical
 Wickham, Hadley, Joe Cheng, Aaron Jacobs, Garrick Aden-Buie, and Barret Schloerke. 2026. <em>Ellmer: Chat with Large Language Models</em>. <a href="https://ellmer.tidyverse.org">https://ellmer.tidyverse.org</a>.
 </div>
 <div id="ref-wong2021" class="csl-entry" role="listitem">
-Wong, Andrew, Erkin Otles, John P Donnelly, Andrew Krumm, Jeffrey McCullough, Olivia DeTroyer-Cooley, Justin Pestrue, et al. 2021. <span>“<span class="nocase">External Validation of a Widely Implemented Proprietary Sepsis Prediction Model in Hospitalized Patients</span>.”</span> <em>JAMA Intern Med</em> 181 (8): 1065–70. <a href="https://doi.org/10.1001/jamainternmed.2021.2626">https://doi.org/10.1001/jamainternmed.2021.2626</a>.
+<span class="nocase">Wong, Andrew, Erkin Otles, John P Donnelly, et al.</span> 2021. <span>“<span class="nocase">External Validation of a Widely Implemented Proprietary Sepsis Prediction Model in Hospitalized Patients</span>.”</span> <em>JAMA Intern Med</em> 181 (8): 1065–70. <a href="https://doi.org/10.1001/jamainternmed.2021.2626">https://doi.org/10.1001/jamainternmed.2021.2626</a>.
 </div>
 <div id="ref-wynants2020" class="csl-entry" role="listitem">
-Wynants, Laure, Ben Van Calster, Gary S Collins, Richard D Riley, Georg Heinze, et al. 2020. <span>“<span class="nocase">Prediction models for diagnosis and prognosis of covid-19: systematic review and critical appraisal</span>.”</span> <em>BMJ</em> 369: m1328. <a href="https://doi.org/10.1136/bmj.m1328">https://doi.org/10.1136/bmj.m1328</a>.
+<span class="nocase">Wynants, Laure, Ben Van Calster, Gary S Collins, Richard D Riley, Georg Heinze, et al.</span> 2020. <span>“<span class="nocase">Prediction models for diagnosis and prognosis of covid-19: systematic review and critical appraisal</span>.”</span> <em>BMJ</em> 369: m1328. <a href="https://doi.org/10.1136/bmj.m1328">https://doi.org/10.1136/bmj.m1328</a>.
 </div>
 </div>
 </section>
 <section class="slide level2 center">
-<h2>Thank you!</h2>
-<section class="center">
+<h2></h2>
+<div class="center">
+<p><span class="thank-you">Thank you!</span></p>
 <h3>Dr.&nbsp;Wan Nor Arifin</h3>
 <p>wnarifin@usm.my · <a href="https://wnarifin.github.io">wnarifin.github.io</a></p>
 <p>Slides: <a href="https://wnarifin.github.io/2026-r-conf/">wnarifin.github.io/2026-r-conf</a></p>
-</section>
+</div>
 
 </section>
     </div>
